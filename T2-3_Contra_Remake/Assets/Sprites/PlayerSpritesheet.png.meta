@@ -2,56 +2,56 @@ fileFormatVersion: 2
 guid: 934e51b65b8e9d148a732737818249a4
 TextureImporter:
   fileIDToRecycleName:
-    21300000: PlayerSpritesheet_0
-    21300002: PlayerSpritesheet_1
-    21300004: PlayerSpritesheet_2
-    21300006: PlayerSpritesheet_3
-    21300008: PlayerSpritesheet_4
-    21300010: PlayerSpritesheet_5
+    21300000: Player_Idle
+    21300002: Player_Idle_Shoot
+    21300004: Player_AimUp
+    21300006: Player_AimUp_Shoot
+    21300008: Player_Crouch
+    21300010: Player_Crouch_Shoot
     21300012: Player_Run_1
     21300014: Player_Run_2
     21300016: Player_Run_3
     21300018: Player_Run_4
     21300020: Player_Run_5
     21300022: Player_Run_6
-    21300024: PlayerSpritesheet_12
-    21300026: PlayerSpritesheet_13
-    21300028: PlayerSpritesheet_14
-    21300030: PlayerSpritesheet_15
-    21300032: PlayerSpritesheet_16
-    21300034: PlayerSpritesheet_17
-    21300036: PlayerSpritesheet_18
-    21300038: PlayerSpritesheet_19
-    21300040: PlayerSpritesheet_20
-    21300042: PlayerSpritesheet_21
-    21300044: PlayerSpritesheet_22
-    21300046: PlayerSpritesheet_23
-    21300048: PlayerSpritesheet_24
-    21300050: PlayerSpritesheet_25
-    21300052: PlayerSpritesheet_26
-    21300054: PlayerSpritesheet_27
-    21300056: PlayerSpritesheet_28
-    21300058: PlayerSpritesheet_29
-    21300060: PlayerSpritesheet_30
-    21300062: PlayerSpritesheet_31
-    21300064: PlayerSpritesheet_32
-    21300066: PlayerSpritesheet_33
-    21300068: PlayerSpritesheet_34
-    21300070: PlayerSpritesheet_35
-    21300072: PlayerSpritesheet_36
-    21300074: PlayerSpritesheet_37
-    21300076: PlayerSpritesheet_38
-    21300078: PlayerSpritesheet_39
-    21300080: PlayerSpritesheet_40
-    21300082: PlayerSpritesheet_41
-    21300084: PlayerSpritesheet_42
-    21300086: PlayerSpritesheet_43
-    21300088: PlayerSpritesheet_44
-    21300090: PlayerSpritesheet_45
-    21300092: PlayerSpritesheet_46
-    21300094: PlayerSpritesheet_47
-    21300096: PlayerSpritesheet_48
-    21300098: PlayerSpritesheet_49
+    21300024: Player_Jump_1
+    21300026: Player_Jump_2
+    21300028: Player_Jump_3
+    21300030: Player_Jump_4
+    21300032: Player_Run_Shoot_1_1
+    21300034: Player_Run_Shoot_1_2
+    21300036: Player_Run_Shoot_1_3
+    21300038: Player_Die_1
+    21300040: Player_Die_2
+    21300042: Player_Die_3
+    21300044: Player_Die_4
+    21300046: Player_Die_5
+    21300048: Player_Run_Shoot_2_1
+    21300050: Player_Run_Shoot_2_2
+    21300052: Player_Run_Shoot_2_3
+    21300054: Player_Run_ShootUp_1_1
+    21300056: Player_Run_ShootUp_1_2
+    21300058: Player_Run_ShootUp_1_3
+    21300060: Player_Run_ShootUp_2_1
+    21300062: Player_Run_ShootUp_2_2
+    21300064: Player_Run_ShootUp_2_3
+    21300066: Player_Run_ShootDown_1_1
+    21300068: Player_Run_ShootDown_1_2
+    21300070: Player_Run_ShootDown_1_3
+    21300072: Player_Run_ShootDown_2_1
+    21300074: Player_Run_ShootDown_2_2
+    21300076: Player_Run_ShootDown_2_3
+    21300078: Player_EnterWater_1
+    21300080: Player_EnterWater_2
+    21300082: Player_EnterWater_3
+    21300084: Player_WalkWater_1
+    21300086: Player_WalkWater_2
+    21300088: Player_ShootWater_1
+    21300090: Player_ShootUpWater_1
+    21300092: Player_ShootDownWater_1
+    21300094: Player_ShootWater_2
+    21300096: Player_ShootUpWater_2
+    21300098: Player_ShootDownWater_2
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -95,7 +95,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 30
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -167,7 +167,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerSpritesheet_0
+      name: Player_Idle
       rect:
         serializedVersion: 2
         x: 0
@@ -187,7 +187,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_1
+      name: Player_Idle_Shoot
       rect:
         serializedVersion: 2
         x: 42
@@ -207,7 +207,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_2
+      name: Player_AimUp
       rect:
         serializedVersion: 2
         x: 84
@@ -227,7 +227,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_3
+      name: Player_AimUp_Shoot
       rect:
         serializedVersion: 2
         x: 126
@@ -247,7 +247,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_4
+      name: Player_Crouch
       rect:
         serializedVersion: 2
         x: 168
@@ -267,7 +267,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_5
+      name: Player_Crouch_Shoot
       rect:
         serializedVersion: 2
         x: 210
@@ -407,7 +407,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_12
+      name: Player_Jump_1
       rect:
         serializedVersion: 2
         x: 252
@@ -427,7 +427,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_13
+      name: Player_Jump_2
       rect:
         serializedVersion: 2
         x: 294
@@ -447,7 +447,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_14
+      name: Player_Jump_3
       rect:
         serializedVersion: 2
         x: 336
@@ -467,7 +467,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_15
+      name: Player_Jump_4
       rect:
         serializedVersion: 2
         x: 378
@@ -487,7 +487,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_16
+      name: Player_Run_Shoot_1_1
       rect:
         serializedVersion: 2
         x: 0
@@ -507,7 +507,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_17
+      name: Player_Run_Shoot_1_2
       rect:
         serializedVersion: 2
         x: 42
@@ -527,7 +527,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_18
+      name: Player_Run_Shoot_1_3
       rect:
         serializedVersion: 2
         x: 84
@@ -547,7 +547,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_19
+      name: Player_Die_1
       rect:
         serializedVersion: 2
         x: 126
@@ -567,7 +567,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_20
+      name: Player_Die_2
       rect:
         serializedVersion: 2
         x: 168
@@ -587,7 +587,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_21
+      name: Player_Die_3
       rect:
         serializedVersion: 2
         x: 210
@@ -607,7 +607,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_22
+      name: Player_Die_4
       rect:
         serializedVersion: 2
         x: 252
@@ -627,7 +627,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_23
+      name: Player_Die_5
       rect:
         serializedVersion: 2
         x: 294
@@ -647,7 +647,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_24
+      name: Player_Run_Shoot_2_1
       rect:
         serializedVersion: 2
         x: 0
@@ -667,7 +667,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_25
+      name: Player_Run_Shoot_2_2
       rect:
         serializedVersion: 2
         x: 42
@@ -687,7 +687,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_26
+      name: Player_Run_Shoot_2_3
       rect:
         serializedVersion: 2
         x: 84
@@ -707,7 +707,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_27
+      name: Player_Run_ShootUp_1_1
       rect:
         serializedVersion: 2
         x: 0
@@ -727,7 +727,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_28
+      name: Player_Run_ShootUp_1_2
       rect:
         serializedVersion: 2
         x: 42
@@ -747,7 +747,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_29
+      name: Player_Run_ShootUp_1_3
       rect:
         serializedVersion: 2
         x: 84
@@ -767,7 +767,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_30
+      name: Player_Run_ShootUp_2_1
       rect:
         serializedVersion: 2
         x: 0
@@ -787,7 +787,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_31
+      name: Player_Run_ShootUp_2_2
       rect:
         serializedVersion: 2
         x: 42
@@ -807,7 +807,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_32
+      name: Player_Run_ShootUp_2_3
       rect:
         serializedVersion: 2
         x: 84
@@ -827,7 +827,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_33
+      name: Player_Run_ShootDown_1_1
       rect:
         serializedVersion: 2
         x: 0
@@ -847,7 +847,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_34
+      name: Player_Run_ShootDown_1_2
       rect:
         serializedVersion: 2
         x: 42
@@ -867,7 +867,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_35
+      name: Player_Run_ShootDown_1_3
       rect:
         serializedVersion: 2
         x: 84
@@ -887,7 +887,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_36
+      name: Player_Run_ShootDown_2_1
       rect:
         serializedVersion: 2
         x: 0
@@ -907,7 +907,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_37
+      name: Player_Run_ShootDown_2_2
       rect:
         serializedVersion: 2
         x: 42
@@ -927,7 +927,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_38
+      name: Player_Run_ShootDown_2_3
       rect:
         serializedVersion: 2
         x: 84
@@ -947,7 +947,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_39
+      name: Player_EnterWater_1
       rect:
         serializedVersion: 2
         x: 0
@@ -967,7 +967,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_40
+      name: Player_EnterWater_2
       rect:
         serializedVersion: 2
         x: 42
@@ -987,7 +987,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_41
+      name: Player_EnterWater_3
       rect:
         serializedVersion: 2
         x: 84
@@ -1007,7 +1007,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_42
+      name: Player_WalkWater_1
       rect:
         serializedVersion: 2
         x: 126
@@ -1027,7 +1027,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_43
+      name: Player_WalkWater_2
       rect:
         serializedVersion: 2
         x: 168
@@ -1047,7 +1047,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_44
+      name: Player_ShootWater_1
       rect:
         serializedVersion: 2
         x: 210
@@ -1067,7 +1067,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_45
+      name: Player_ShootUpWater_1
       rect:
         serializedVersion: 2
         x: 252
@@ -1087,7 +1087,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_46
+      name: Player_ShootDownWater_1
       rect:
         serializedVersion: 2
         x: 294
@@ -1107,7 +1107,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_47
+      name: Player_ShootWater_2
       rect:
         serializedVersion: 2
         x: 210
@@ -1127,7 +1127,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_48
+      name: Player_ShootUpWater_2
       rect:
         serializedVersion: 2
         x: 252
@@ -1147,7 +1147,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerSpritesheet_49
+      name: Player_ShootDownWater_2
       rect:
         serializedVersion: 2
         x: 294
