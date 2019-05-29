@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Dive Animation
+  m_Name: Idle Shooting Animation
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,11 +20,9 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300078, guid: 934e51b65b8e9d148a732737818249a4, type: 3}
-    - time: 0.2
-      value: {fileID: 21300080, guid: 934e51b65b8e9d148a732737818249a4, type: 3}
-    - time: 0.3
-      value: {fileID: 21300082, guid: 934e51b65b8e9d148a732737818249a4, type: 3}
+      value: {fileID: 21300002, guid: 934e51b65b8e9d148a732737818249a4, type: 3}
+    - time: 0.1
+      value: {fileID: 21300002, guid: 934e51b65b8e9d148a732737818249a4, type: 3}
     attribute: m_Sprite
     path: SpritesManagement/NormalSprite
     classID: 212
@@ -44,15 +42,14 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300078, guid: 934e51b65b8e9d148a732737818249a4, type: 3}
-    - {fileID: 21300080, guid: 934e51b65b8e9d148a732737818249a4, type: 3}
-    - {fileID: 21300082, guid: 934e51b65b8e9d148a732737818249a4, type: 3}
+    - {fileID: 21300002, guid: 934e51b65b8e9d148a732737818249a4, type: 3}
+    - {fileID: 21300002, guid: 934e51b65b8e9d148a732737818249a4, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.33333334
+    m_StopTime: 0.13333334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
