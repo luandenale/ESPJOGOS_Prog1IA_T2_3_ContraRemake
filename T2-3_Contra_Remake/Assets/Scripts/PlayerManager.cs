@@ -8,9 +8,10 @@ public class PlayerManager : MonoBehaviour
 
     public static PlayerManager instance = null;
 
-    public bool IsPlayerTouchingGround;
+    public Vector2 PlayerDirection;
     public bool PlayerJumped = false;
-    public Vector2 PlayerDirection { get; private set; }
+    public bool IsPlayerTouchingGround;
+    public bool IsPlayerShooting;
     public bool IsPlayerWalking { get; private set; }
     public bool IsAimingUp { get; private set; }
     public bool IsAimingDown { get; private set; }
@@ -32,7 +33,10 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        SetPlayerDirection();
+        if (_playerRigidBody.velocity.y != 0)
+        {
+            IsPlayerTouchingGround = false;
+        }
 
         if (_playerRigidBody.velocity.x != 0)
             IsPlayerWalking = true;
@@ -48,25 +52,9 @@ public class PlayerManager : MonoBehaviour
                 Sprites[i].flipX = true;
     }
 
-    private void SetPlayerDirection()
-    {
-        if (_playerRigidBody.velocity.x > 0)
-            PlayerDirection = new Vector2(1f, PlayerDirection.y);
-        else if(_playerRigidBody.velocity.x < 0)
-            PlayerDirection = new Vector2(-1f, PlayerDirection.y);
-
-        if (_playerRigidBody.velocity.y > 0)
-            PlayerDirection = new Vector2(PlayerDirection.x, 1f);
-        else if (_playerRigidBody.velocity.y < 0)
-        {
-            PlayerDirection = new Vector2(PlayerDirection.x, -1f);
-            IsPlayerTouchingGround = false;
-        }
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Ground" && _playerRigidBody.velocity.y == 0)
             IsPlayerTouchingGround = true;
     }
 }
