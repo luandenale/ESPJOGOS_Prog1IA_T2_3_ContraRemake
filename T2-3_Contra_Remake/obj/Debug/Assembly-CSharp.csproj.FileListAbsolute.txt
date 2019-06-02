@@ -1,0 +1,2 @@
+C:\Users\Work\Documents\ContraRemake\T2-3_Contra_Remake\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\Work\Documents\ContraRemake\T2-3_Contra_Remake\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
