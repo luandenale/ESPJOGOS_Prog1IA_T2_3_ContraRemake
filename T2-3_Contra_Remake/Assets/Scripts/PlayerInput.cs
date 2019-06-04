@@ -8,10 +8,12 @@ public class PlayerInput: MonoBehaviour
     [SerializeField] float _walkSpeed;
 
     private Rigidbody2D _playerRigidBody;
+    private BoxCollider2D _playerCollider;
 
     private void Awake()
     {
         _playerRigidBody = GetComponent<Rigidbody2D>();
+        _playerCollider = GetComponent<BoxCollider2D>();
     }
 
     private void Update()
@@ -34,11 +36,21 @@ public class PlayerInput: MonoBehaviour
         // Jump Action
         if (Input.GetKeyDown(KeyCode.X) && PlayerManager.instance.IsPlayerTouchingGround)
         {
-            PlayerManager.instance.PlayerJumped = true;
-            _playerRigidBody.AddForce(new Vector3(0f, 6f, 0f), ForceMode2D.Impulse);
-            PlayerManager.instance.IsPlayerTouchingGround = false;
+            // Check if its trying to jump down through floor
+            if(PlayerManager.instance.PlayerDirection.y < 0)
+            {
+                PlayerManager.instance.PlayerJumpingDown = true;
+            }
+            // Regular jump
+            else
+            {
+                PlayerManager.instance.PlayerJumped = true;
+                _playerRigidBody.AddForce(new Vector3(0f, 6f, 0f), ForceMode2D.Impulse);
+                PlayerManager.instance.IsPlayerTouchingGround = false;
+            }
         }
 
+        // Shooting Action
         if(Input.GetKeyDown(KeyCode.Z))
             PlayerManager.instance.IsPlayerShooting = true;
 

@@ -783,9 +783,10 @@ MonoBehaviour:
   - {fileID: 1934427032}
   - {fileID: 1418706456}
   - {fileID: 558094002}
-  IsPlayerTouchingGround: 0
-  PlayerJumped: 0
   PlayerDirection: {x: 0, y: 0}
+  PlayerJumped: 0
+  IsPlayerTouchingGround: 0
+  IsPlayerShooting: 0
 --- !u!1 &1418706454
 GameObject:
   m_ObjectHideFlags: 0
