@@ -51,7 +51,7 @@ public class PlayerInput: MonoBehaviour
         }
 
         // Shooting Action
-        if(Input.GetKeyDown(KeyCode.Z))
+        if(Input.GetKey(KeyCode.Z))
             PlayerManager.instance.IsPlayerShooting = true;
 
     }

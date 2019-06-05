@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField] SpriteRenderer[] Sprites;
-
     public static PlayerManager instance = null;
 
     public Vector2 PlayerDirection;
@@ -44,13 +42,7 @@ public class PlayerManager : MonoBehaviour
         else
             IsPlayerWalking = false;
 
-        // Set Sprites Dir
-        if(PlayerDirection.x > 0)
-            for (int i = 0; i < Sprites.Length; i++)
-                 Sprites[i].flipX = false;
-        else if (PlayerDirection.x < 0)
-            for (int i = 0; i < Sprites.Length; i++)
-                Sprites[i].flipX = true;
+        
     }
 
     private void OnCollisionStay2D(Collision2D p_collision)

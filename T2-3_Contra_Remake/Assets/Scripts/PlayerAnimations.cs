@@ -16,8 +16,12 @@ public struct AnimTriggers
 
 public class PlayerAnimations : MonoBehaviour
 {
+    [SerializeField] SpriteRenderer[] Sprites;
+
     private Animator _playerAnim;
-    
+
+    private bool _coolingDown = false;
+    private Coroutine _coolingDownStraightRoutineReference = null;
 
     private void Awake()
     {
@@ -26,6 +30,8 @@ public class PlayerAnimations : MonoBehaviour
 
     private void Update()
     {
+        FlipSprites();
+
         // Player is touching the ground
         if (PlayerManager.instance.IsPlayerTouchingGround)
         {
@@ -34,6 +40,7 @@ public class PlayerAnimations : MonoBehaviour
         // Player on the air
         else
         {
+            ResetBackSprites();
             OnTheAirAnimation();
         }
 
@@ -45,6 +52,17 @@ public class PlayerAnimations : MonoBehaviour
         }
         else
             _playerAnim.SetBool(AnimTriggers.IsShooting, false);
+    }
+
+    private void FlipSprites()
+    {
+        // Set Sprites Dir
+        if (PlayerManager.instance.PlayerDirection.x > 0)
+            for (int i = 0; i < Sprites.Length; i++)
+                Sprites[i].flipX = false;
+        else if (PlayerManager.instance.PlayerDirection.x < 0)
+            for (int i = 0; i < Sprites.Length; i++)
+                Sprites[i].flipX = true;
     }
 
     private void OnTheGroundAnimations()
@@ -64,9 +82,15 @@ public class PlayerAnimations : MonoBehaviour
 
         // Set walking anim
         if (PlayerManager.instance.IsPlayerWalking)
+        {
+            SwitchRunningSprites();
             _playerAnim.SetBool(AnimTriggers.IsWalking, true);
+        }
         else
+        {
+            ResetBackSprites();
             _playerAnim.SetBool(AnimTriggers.IsWalking, false);
+        }
     }
 
     private void OnTheAirAnimation()
@@ -77,5 +101,103 @@ public class PlayerAnimations : MonoBehaviour
             PlayerManager.instance.PlayerJumped = false;
             _playerAnim.SetTrigger(AnimTriggers.Jump);
         }
+    }
+
+    private void SwitchRunningSprites()
+    {
+        
+        // Player is aiming up
+        if(PlayerManager.instance.PlayerDirection.y > 0)
+        {
+            
+            if (PlayerManager.instance.IsPlayerShooting)
+            {
+
+            }
+            else
+            {
+                Sprites[3].enabled = true;
+                // Disable all other sprites
+                for (int i = 0; i < Sprites.Length; i++)
+                    if (i != 3)
+                        Sprites[i].enabled = false;
+            }
+        }
+        // Player is aiming down
+        else if(PlayerManager.instance.PlayerDirection.y < 0)
+        {
+            if (PlayerManager.instance.IsPlayerShooting)
+            {
+
+            }
+            else
+            {
+                Sprites[5].enabled = true;
+                // Disable all other sprites
+                for (int i = 0; i < Sprites.Length; i++)
+                    if (i != 5)
+                        Sprites[i].enabled = false;
+            }
+        }
+        // Running straight ahead
+        else
+        {
+            if (PlayerManager.instance.IsPlayerShooting)
+            {
+                _coolingDown = true;
+
+                if (_coolingDownStraightRoutineReference!=null)
+                    StopCoroutine(_coolingDownStraightRoutineReference);
+                _coolingDownStraightRoutineReference = StartCoroutine(CoolingDownStraightRoutine());
+
+                StartCoroutine(ShootStraight());
+            }
+            else if(!_coolingDown)
+            {
+                Sprites[0].enabled = true;
+                // Disable all other sprites
+                for (int i = 1; i < Sprites.Length; i++)
+                    Sprites[i].enabled = false;
+
+            }
+        }
+    }
+
+    private void ResetBackSprites()
+    {
+        Sprites[0].enabled = true;
+        // Disable all other sprites
+        for (int i = 1; i < Sprites.Length; i++)
+            Sprites[i].enabled = false;
+    }
+
+    private IEnumerator CoolingDownStraightRoutine()
+    {
+
+        Sprites[1].enabled = true;
+        // Disable all other sprites
+        for (int i = 0; i < Sprites.Length; i++)
+            if (i != 1)
+                Sprites[i].enabled = false;
+
+        yield return new WaitForSeconds(1.5f);
+         _coolingDown = false;
+    }
+
+    private IEnumerator ShootStraight()
+    {
+        Sprites[2].enabled = true;
+        // Disable all other sprites
+        for (int i = 0; i < Sprites.Length; i++)
+            if (i != 2)
+                Sprites[i].enabled = false;
+
+        yield return new WaitForSeconds(0.6f);
+
+        Sprites[1].enabled = true;
+        // Disable all other sprites
+        for (int i = 0; i < Sprites.Length; i++)
+            if (i != 1)
+                Sprites[i].enabled = false;
     }
 }
