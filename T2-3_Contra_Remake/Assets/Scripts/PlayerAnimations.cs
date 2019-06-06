@@ -22,6 +22,7 @@ public class PlayerAnimations : MonoBehaviour
 
     private bool _coolingDown = false;
     private Coroutine _coolingDownStraightRoutineReference = null;
+    private Coroutine _currentShootingRoutineReference = null;
 
     private void Awake()
     {
@@ -40,7 +41,7 @@ public class PlayerAnimations : MonoBehaviour
         // Player on the air
         else
         {
-            ResetBackSprites();
+            SetActiveSprite(0);
             OnTheAirAnimation();
         }
 
@@ -69,6 +70,7 @@ public class PlayerAnimations : MonoBehaviour
     {
         _playerAnim.SetBool(AnimTriggers.OnGround, true);
 
+
         // Set aim up and down triggers
         if (PlayerManager.instance.PlayerDirection.y > 0 && !PlayerManager.instance.IsPlayerWalking)
             _playerAnim.SetBool(AnimTriggers.IsAimingUp, true);
@@ -79,7 +81,6 @@ public class PlayerAnimations : MonoBehaviour
             _playerAnim.SetBool(AnimTriggers.IsAimingUp, false);
             _playerAnim.SetBool(AnimTriggers.IsAimingDown, false);
         }
-
         // Set walking anim
         if (PlayerManager.instance.IsPlayerWalking)
         {
@@ -88,7 +89,7 @@ public class PlayerAnimations : MonoBehaviour
         }
         else
         {
-            ResetBackSprites();
+            SetActiveSprite(0);
             _playerAnim.SetBool(AnimTriggers.IsWalking, false);
         }
     }
@@ -105,99 +106,65 @@ public class PlayerAnimations : MonoBehaviour
 
     private void SwitchRunningSprites()
     {
-        
-        // Player is aiming up
-        if(PlayerManager.instance.PlayerDirection.y > 0)
-        {
-            
-            if (PlayerManager.instance.IsPlayerShooting)
-            {
+        // Cancel current shooting routine before triggering another
+        if (_currentShootingRoutineReference != null)
+            StopCoroutine(_currentShootingRoutineReference);
 
-            }
+        // Player is aiming up
+        if (PlayerManager.instance.PlayerDirection.y > 0)
+            if (PlayerManager.instance.IsPlayerShooting)
+                StartCoroutine(SetShootingSprite(4, 3));
             else
-            {
-                Sprites[3].enabled = true;
-                // Disable all other sprites
-                for (int i = 0; i < Sprites.Length; i++)
-                    if (i != 3)
-                        Sprites[i].enabled = false;
-            }
-        }
+                SetActiveSprite(3);
         // Player is aiming down
         else if(PlayerManager.instance.PlayerDirection.y < 0)
-        {
             if (PlayerManager.instance.IsPlayerShooting)
-            {
-
-            }
+                StartCoroutine(SetShootingSprite(6, 5));
             else
-            {
-                Sprites[5].enabled = true;
-                // Disable all other sprites
-                for (int i = 0; i < Sprites.Length; i++)
-                    if (i != 5)
-                        Sprites[i].enabled = false;
-            }
-        }
+                SetActiveSprite(5);
         // Running straight ahead
         else
-        {
             if (PlayerManager.instance.IsPlayerShooting)
             {
                 _coolingDown = true;
 
+                // Cancel cooling down routine before triggering another
                 if (_coolingDownStraightRoutineReference!=null)
                     StopCoroutine(_coolingDownStraightRoutineReference);
                 _coolingDownStraightRoutineReference = StartCoroutine(CoolingDownStraightRoutine());
 
-                StartCoroutine(ShootStraight());
+                StartCoroutine(SetShootingSprite(2,1));
             }
             else if(!_coolingDown)
-            {
-                Sprites[0].enabled = true;
-                // Disable all other sprites
-                for (int i = 1; i < Sprites.Length; i++)
-                    Sprites[i].enabled = false;
-
-            }
-        }
+                SetActiveSprite(0);
+            else if(_coolingDown)
+                SetActiveSprite(1);
     }
 
-    private void ResetBackSprites()
+    private void SetActiveSprite(int p_index)
     {
-        Sprites[0].enabled = true;
+        Sprites[p_index].enabled = true;
         // Disable all other sprites
-        for (int i = 1; i < Sprites.Length; i++)
-            Sprites[i].enabled = false;
+        for (int i = 0; i < Sprites.Length; i++)
+            if (i != p_index)
+                Sprites[i].enabled = false;
     }
 
     private IEnumerator CoolingDownStraightRoutine()
     {
-
-        Sprites[1].enabled = true;
-        // Disable all other sprites
-        for (int i = 0; i < Sprites.Length; i++)
-            if (i != 1)
-                Sprites[i].enabled = false;
+        SetActiveSprite(1);
 
         yield return new WaitForSeconds(1.5f);
          _coolingDown = false;
     }
 
-    private IEnumerator ShootStraight()
+    private IEnumerator SetShootingSprite(int p_indexShootingSprite, int p_indexRegulargSprite)
     {
-        Sprites[2].enabled = true;
-        // Disable all other sprites
-        for (int i = 0; i < Sprites.Length; i++)
-            if (i != 2)
-                Sprites[i].enabled = false;
+        SetActiveSprite(p_indexShootingSprite);
 
         yield return new WaitForSeconds(0.6f);
 
-        Sprites[1].enabled = true;
-        // Disable all other sprites
-        for (int i = 0; i < Sprites.Length; i++)
-            if (i != 1)
-                Sprites[i].enabled = false;
+        if (Sprites[p_indexShootingSprite].enabled)
+            SetActiveSprite(p_indexRegulargSprite);
     }
 }
