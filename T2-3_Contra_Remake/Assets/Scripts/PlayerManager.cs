@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Weapon
+{
+    REGULAR
+}
+
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager instance = null;
 
+    public Weapon CurrentWeapon;
     public Vector2 PlayerDirection;
     public bool PlayerJumped = false;
     public bool PlayerJumpingDown = false;

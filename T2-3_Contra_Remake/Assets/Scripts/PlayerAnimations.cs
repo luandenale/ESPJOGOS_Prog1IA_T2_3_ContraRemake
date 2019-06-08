@@ -63,7 +63,7 @@ public class PlayerAnimations : MonoBehaviour
                 Sprites[i].flipX = false;
         else if (PlayerManager.instance.PlayerDirection.x < 0)
             for (int i = 0; i < Sprites.Length; i++)
-                Sprites[i].flipX = true;
+                    Sprites[i].flipX = true;
     }
 
     private void OnTheGroundAnimations()
