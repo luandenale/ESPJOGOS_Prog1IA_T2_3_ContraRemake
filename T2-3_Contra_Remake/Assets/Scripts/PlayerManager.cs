@@ -41,19 +41,16 @@ public class PlayerManager : MonoBehaviour
             IsPlayerWalking = true;
         else
             IsPlayerWalking = false;
-
-        
     }
 
     private void OnCollisionStay2D(Collision2D p_collision)
     {
-
         if (p_collision.gameObject.tag == "Ground")
         {
             // Check if its firmly on the floor
             if(_playerRigidBody.velocity.y == 0)
                 IsPlayerTouchingGround = true;
-            
+
             // Check to jump down through
             if (PlayerJumpingDown)
             {

@@ -735,7 +735,7 @@ Rigidbody2D:
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &1088365567
@@ -751,6 +751,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _walkSpeed: 4
+  _shot: {fileID: 5940046723842265515, guid: e43186fb212c6374eba66d376c0862e1, type: 3}
 --- !u!114 &1088365568
 MonoBehaviour:
   m_ObjectHideFlags: 0

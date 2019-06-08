@@ -6,6 +6,7 @@ public class PlayerInput: MonoBehaviour
 {
     [Range(2f,6f)]
     [SerializeField] float _walkSpeed;
+    [SerializeField] GameObject _shot;
 
     private Rigidbody2D _playerRigidBody;
     private BoxCollider2D _playerCollider;
@@ -51,8 +52,13 @@ public class PlayerInput: MonoBehaviour
         }
 
         // Shooting Action
-        if(Input.GetKey(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            GameObject __firedShot = Instantiate(_shot, gameObject.transform.position, Quaternion.identity);
+            __firedShot.GetComponent<ShotController>()._shotSpeed = 10f;
+            __firedShot.GetComponent<ShotController>().shotDirection = PlayerManager.instance.PlayerDirection;
             PlayerManager.instance.IsPlayerShooting = true;
+        }
 
     }
 

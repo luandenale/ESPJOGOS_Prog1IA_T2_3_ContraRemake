@@ -70,7 +70,6 @@ public class PlayerAnimations : MonoBehaviour
     {
         _playerAnim.SetBool(AnimTriggers.OnGround, true);
 
-
         // Set aim up and down triggers
         if (PlayerManager.instance.PlayerDirection.y > 0 && !PlayerManager.instance.IsPlayerWalking)
             _playerAnim.SetBool(AnimTriggers.IsAimingUp, true);
