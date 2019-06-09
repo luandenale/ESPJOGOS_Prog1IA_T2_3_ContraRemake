@@ -22,6 +22,7 @@ public class PlayerInput: MonoBehaviour
     private Rigidbody2D _playerRigidBody;
     private BoxCollider2D _playerCollider;
     private SpawnPointPositions _spawnPositions = new SpawnPointPositions();
+    private bool _gunCooledDown = true;
 
     private void Awake()
     {
@@ -65,27 +66,106 @@ public class PlayerInput: MonoBehaviour
         }
 
         // Shooting Action
-        if (Input.GetKeyDown(KeyCode.Z))
+        if(Input.GetKey(KeyCode.Z) && PlayerManager.instance.CurrentWeapon == Weapon.MACHINEGUN && _gunCooledDown)
         {
+            StartCoroutine(GunCoolingDownRoutine());
+
             ShotSpawnPoint.localPosition = SetSpawnPoint();
 
-            GameObject __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.identity);
-            __firedShot.GetComponent<ShotController>()._shotSpeed = 10f;
+            InstantiateShot();
 
-            if(PlayerManager.instance.IsPlayerWalking)
+            PlayerManager.instance.IsPlayerShooting = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Z) && _gunCooledDown)
+        {
+            StartCoroutine(GunCoolingDownRoutine());
+
+            ShotSpawnPoint.localPosition = SetSpawnPoint();
+
+            InstantiateShot();
+
+            PlayerManager.instance.IsPlayerShooting = true;
+        }
+
+    }
+
+    private IEnumerator GunCoolingDownRoutine()
+    {
+        _gunCooledDown = false;
+
+        switch (PlayerManager.instance.CurrentWeapon)
+        {
+            case Weapon.MACHINEGUN:
+                yield return new WaitForSeconds(0.1f);
+                break;
+            case Weapon.SPREAD:
+                yield return new WaitForSeconds(0.3f);
+                break;
+            default:
+                yield return new WaitForSeconds(0.2f);
+                break;
+        }
+
+        _gunCooledDown = true;
+    }
+
+    private void InstantiateShot()
+    {
+        // Spread Shot is treated separately as it spwans 6 shots
+        if (PlayerManager.instance.CurrentWeapon == Weapon.SPREAD)
+        {
+            float __yDir = -0.2f;
+            for (int i = 0; i < 5; i++)
+            {
+                GameObject __spreadShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.identity);
+
+                __spreadShot.GetComponent<ShotController>().shotSpeed = 10f;
+                __spreadShot.GetComponent<ShotController>().shotType = "Spread";
+                __spreadShot.GetComponent<ShotController>().shotDamage = 10f;
+
+                if (PlayerManager.instance.IsPlayerWalking)
+                    __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, PlayerManager.instance.PlayerDirection.y + __yDir);
+                else if (PlayerManager.instance.PlayerDirection.y == 1f)
+                    __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(0f, 1f + __yDir);
+                else if (PlayerManager.instance.PlayerDirection.y == -1f)
+                    if (PlayerManager.instance.IsPlayerTouchingGround)
+                        __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, __yDir);
+                    else
+                        __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(0f, -1f + __yDir);
+                else
+                    __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, PlayerManager.instance.PlayerDirection.y + __yDir);
+
+                __yDir += 0.1f;
+            }
+        }
+        else
+        {
+            GameObject __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.identity);
+
+            __firedShot.GetComponent<ShotController>().shotSpeed = 10f;
+
+            if (PlayerManager.instance.CurrentWeapon == Weapon.REGULAR)
+            {
+                __firedShot.GetComponent<ShotController>().shotType = "Regular";
+                __firedShot.GetComponent<ShotController>().shotDamage = 10f;
+            }
+            else if (PlayerManager.instance.CurrentWeapon == Weapon.MACHINEGUN)
+            {
+                __firedShot.GetComponent<ShotController>().shotType = "MachineGun";
+                __firedShot.GetComponent<ShotController>().shotDamage = 10f;
+            }
+
+            if (PlayerManager.instance.IsPlayerWalking)
                 __firedShot.GetComponent<ShotController>().shotDirection = PlayerManager.instance.PlayerDirection;
             else if (PlayerManager.instance.PlayerDirection.y == 1f)
                 __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(0f, 1f);
             else if (PlayerManager.instance.PlayerDirection.y == -1f)
-                if(PlayerManager.instance.IsPlayerTouchingGround)
+                if (PlayerManager.instance.IsPlayerTouchingGround)
                     __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, 0f);
                 else
                     __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(0f, -1f);
             else
                 __firedShot.GetComponent<ShotController>().shotDirection = PlayerManager.instance.PlayerDirection;
-
-
-            PlayerManager.instance.IsPlayerShooting = true;
         }
 
     }

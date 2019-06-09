@@ -4,7 +4,9 @@ using UnityEngine;
 
 public enum Weapon
 {
-    REGULAR
+    REGULAR,
+    MACHINEGUN,
+    SPREAD
 }
 
 public class PlayerManager : MonoBehaviour
