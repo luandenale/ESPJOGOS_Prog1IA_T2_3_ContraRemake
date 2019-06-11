@@ -101,6 +101,9 @@ public class PlayerInput: MonoBehaviour
             case Weapon.SPREAD:
                 yield return new WaitForSeconds(0.3f);
                 break;
+            case Weapon.FIRE:
+                yield return new WaitForSeconds(0.4f);
+                break;
             default:
                 yield return new WaitForSeconds(0.2f);
                 break;
@@ -154,8 +157,13 @@ public class PlayerInput: MonoBehaviour
                 __firedShot.GetComponent<ShotController>().shotType = "MachineGun";
                 __firedShot.GetComponent<ShotController>().shotDamage = 10f;
             }
+            else if (PlayerManager.instance.CurrentWeapon == Weapon.FIRE)
+            {
+                __firedShot.GetComponent<ShotController>().shotType = "Fire";
+                __firedShot.GetComponent<ShotController>().shotDamage = 7.5f;
+            }
 
-            if (PlayerManager.instance.IsPlayerWalking)
+                if (PlayerManager.instance.IsPlayerWalking)
                 __firedShot.GetComponent<ShotController>().shotDirection = PlayerManager.instance.PlayerDirection;
             else if (PlayerManager.instance.PlayerDirection.y == 1f)
                 __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(0f, 1f);

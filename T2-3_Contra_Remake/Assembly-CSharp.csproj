@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\PlayerAnimations.cs" />
     <Compile Include="Assets\Scripts\PlayerInput.cs" />
     <Compile Include="Assets\Scripts\PlayerManager.cs" />
+    <Compile Include="Assets\Scripts\RotatingShot.cs" />
     <Compile Include="Assets\Scripts\ShotController.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Work/Documents/ContraRemake/T2-3_Contra_Remake/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>

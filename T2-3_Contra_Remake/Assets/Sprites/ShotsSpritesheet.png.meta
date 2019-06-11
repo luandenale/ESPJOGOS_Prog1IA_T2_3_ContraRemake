@@ -6,7 +6,7 @@ TextureImporter:
     21300002: Shots_MachineGun
     21300004: ShotsSpritesheet_3
     21300006: Shot_Spread
-    21300008: ShotsSpritesheet_5
+    21300008: Shots_Fire
     21300010: Shot_Regular
     21300012: Shot_Laser
   externalObjects: {}
@@ -204,7 +204,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShotsSpritesheet_5
+      name: Shots_Fire
       rect:
         serializedVersion: 2
         x: 69

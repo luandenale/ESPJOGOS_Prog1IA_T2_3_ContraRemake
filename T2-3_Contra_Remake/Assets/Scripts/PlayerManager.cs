@@ -6,7 +6,8 @@ public enum Weapon
 {
     REGULAR,
     MACHINEGUN,
-    SPREAD
+    SPREAD,
+    FIRE
 }
 
 public class PlayerManager : MonoBehaviour

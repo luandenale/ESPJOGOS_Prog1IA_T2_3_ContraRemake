@@ -9,6 +9,7 @@ public class ShotController : MonoBehaviour
     public float shotDamage = 10f;
     public string shotType;
 
+    [SerializeField] RotatingShot _rotatingShot;
     private SpriteRenderer[] _shotsSprites;
 
     private void Awake()
@@ -24,11 +25,15 @@ public class ShotController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(shotType == "Fire")
+            _rotatingShot.activate = true;
+
         for(int i = 0; i < _shotsSprites.Length; i++)
         {
             if (_shotsSprites[i].name == shotType)
                 _shotsSprites[i].enabled = true;
         }
+
         transform.Translate(shotDirection * shotSpeed * Time.deltaTime);
     }
 }
