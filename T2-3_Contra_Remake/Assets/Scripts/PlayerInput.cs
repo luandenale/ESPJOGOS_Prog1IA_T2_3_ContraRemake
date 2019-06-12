@@ -117,7 +117,7 @@ public class PlayerInput: MonoBehaviour
         // Spread Shot is treated separately as it spwans 6 shots
         if (PlayerManager.instance.CurrentWeapon == Weapon.SPREAD)
         {
-            float __yDir = -0.2f;
+            float __dir = -0.2f;
             for (int i = 0; i < 5; i++)
             {
                 GameObject __spreadShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.identity);
@@ -127,19 +127,102 @@ public class PlayerInput: MonoBehaviour
                 __spreadShot.GetComponent<ShotController>().shotDamage = 10f;
 
                 if (PlayerManager.instance.IsPlayerWalking)
-                    __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, PlayerManager.instance.PlayerDirection.y + __yDir);
+                {
+                    if (PlayerManager.instance.PlayerDirection.y == 0)
+                        __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, PlayerManager.instance.PlayerDirection.y + __dir);
+                    else
+                    {
+                        float __xFactor = PlayerManager.instance.PlayerDirection.x;
+                        float __yFactor = PlayerManager.instance.PlayerDirection.y;
+
+                        __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(PlayerManager.instance.PlayerDirection.x + (__xFactor * __dir), PlayerManager.instance.PlayerDirection.y - (__yFactor * __dir));
+                    }
+                }
                 else if (PlayerManager.instance.PlayerDirection.y == 1f)
-                    __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(0f, 1f + __yDir);
+                    __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(__dir, 1f);
                 else if (PlayerManager.instance.PlayerDirection.y == -1f)
                     if (PlayerManager.instance.IsPlayerTouchingGround)
-                        __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, __yDir);
+                        __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, __dir);
                     else
-                        __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(0f, -1f + __yDir);
+                        __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(__dir, -1f);
                 else
-                    __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, PlayerManager.instance.PlayerDirection.y + __yDir);
+                    __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, PlayerManager.instance.PlayerDirection.y + __dir);
 
-                __yDir += 0.1f;
+                __dir += 0.1f;
             }
+        }
+        else if (PlayerManager.instance.CurrentWeapon == Weapon.LASER)
+        {
+            GameObject __firedShot;
+
+            
+            // Aiming up
+            if (PlayerManager.instance.PlayerDirection.y == 1f)
+            {
+                // Straight Up
+                if (!PlayerManager.instance.IsPlayerWalking)
+                {
+                    __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.Euler(0, 0, -90));
+                    __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(-1f, 0f);
+                }
+                // Diagonal
+                else
+                {
+                    // Left
+                    if(PlayerManager.instance.PlayerDirection.x == 1f)
+                    {
+                        __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.Euler(0, 0, 45));
+                        __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(1f, 0f);
+                    }
+                    // Right
+                    else
+                    {
+                        __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.Euler(0, 0, -45));
+                        __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(-1f, 0f);
+                    }
+                }
+            }
+            // Aiming Down
+            else if (PlayerManager.instance.PlayerDirection.y == -1f)
+            {
+                // Straight Down
+                if (!PlayerManager.instance.IsPlayerTouchingGround)
+                {
+                    __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.Euler(0, 0, -90));
+                    __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(1f, 0f);
+                }
+                else if (!PlayerManager.instance.IsPlayerWalking)
+                {
+                    __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.identity);
+                    __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, 0f);
+                }
+                // Diagonal
+                else
+                {
+                    // Left
+                    if (PlayerManager.instance.PlayerDirection.x == 1f)
+                    {
+                        __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.Euler(0, 0, -45));
+                        __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(1f, 0f);
+                    }
+                    // Right
+                    else
+                    {
+                        __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.Euler(0, 0, 45));
+                        __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(-1f, 0f);
+                    }
+                }
+            }
+            else
+            {
+                __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.identity);
+                __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, 0f);
+            }
+
+            __firedShot.GetComponent<ShotController>().shotSpeed = 10f;
+            __firedShot.GetComponent<ShotController>().shotType = "Laser";
+            __firedShot.GetComponent<ShotController>().shotDamage = 7.5f;
+
         }
         else
         {
@@ -163,7 +246,7 @@ public class PlayerInput: MonoBehaviour
                 __firedShot.GetComponent<ShotController>().shotDamage = 7.5f;
             }
 
-                if (PlayerManager.instance.IsPlayerWalking)
+            if (PlayerManager.instance.IsPlayerWalking)
                 __firedShot.GetComponent<ShotController>().shotDirection = PlayerManager.instance.PlayerDirection;
             else if (PlayerManager.instance.PlayerDirection.y == 1f)
                 __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(0f, 1f);
@@ -175,7 +258,6 @@ public class PlayerInput: MonoBehaviour
             else
                 __firedShot.GetComponent<ShotController>().shotDirection = PlayerManager.instance.PlayerDirection;
         }
-
     }
 
     private Vector3 SetSpawnPoint()
