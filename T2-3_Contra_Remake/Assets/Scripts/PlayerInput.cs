@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class SpawnPointPositions
 {
-    public Vector3 RegularPosition = new Vector3(0.55f, 0.75f, 0f);
-    public Vector3 CrouchPosition = new Vector3(0.55f, 0.32f, 0f);
-    public Vector3 StraightUpPosition = new Vector3(0.175f, 1.4f, 0f);
-    public Vector3 JumpingPosition = new Vector3(0.05f, 0.75f, 0f);
-    public Vector3 DiagonalUpPosition = new Vector3(0.35f, 1.13f, 0f);
-    public Vector3 DiagonalDownPosition = new Vector3(0.4f, 0.5f, 0f);
+    public Vector3 RegularPosition = new Vector3(0.7f, 0.975f, 0f);
+    public Vector3 CrouchPosition = new Vector3(0.7f, 0.4f, 0f);
+    public Vector3 StraightUpPosition = new Vector3(0.245f, 1.8f, 0f);
+    public Vector3 JumpingPosition = new Vector3(0f, 0.9f, 0f);
+    public Vector3 DiagonalUpPosition = new Vector3(0.4f, 1.45f, 0f);
+    public Vector3 DiagonalDownPosition = new Vector3(0.5f, 0.7f, 0f);
 }
 
 public class PlayerInput: MonoBehaviour
@@ -60,7 +60,7 @@ public class PlayerInput: MonoBehaviour
             else
             {
                 PlayerManager.instance.PlayerJumped = true;
-                _playerRigidBody.AddForce(new Vector3(0f, 6f, 0f), ForceMode2D.Impulse);
+                _playerRigidBody.AddForce(new Vector3(0f, 7f, 0f), ForceMode2D.Impulse);
                 PlayerManager.instance.IsPlayerTouchingGround = false;
             }
         }
