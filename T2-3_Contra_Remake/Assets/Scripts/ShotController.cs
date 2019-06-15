@@ -22,8 +22,7 @@ public class ShotController : MonoBehaviour
         Destroy(gameObject, 1f);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if(shotType == "Fire")
             _rotatingShot.activate = true;
@@ -35,5 +34,13 @@ public class ShotController : MonoBehaviour
         }
 
         transform.Translate(shotDirection * shotSpeed * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "PowerUp")
+        {
+            collision.GetComponent<PowerUpController>().DropPowerUp();
+        }
     }
 }
