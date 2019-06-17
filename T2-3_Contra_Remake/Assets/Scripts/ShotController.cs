@@ -19,7 +19,7 @@ public class ShotController : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 2f);
     }
 
     private void Update()
@@ -39,8 +39,8 @@ public class ShotController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "PowerUp")
-        {
-            collision.GetComponent<PowerUpController>().DropPowerUp();
-        }
+            collision.GetComponent<PowerUpController>().DropPowerUp(4f);
+        else if(collision.tag == "StaticPowerUp")
+            collision.GetComponent<StaticPowerUp>().DropPowerUp();
     }
 }

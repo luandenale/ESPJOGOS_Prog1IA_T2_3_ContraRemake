@@ -61,13 +61,17 @@ public class PowerUpController : MonoBehaviour
         yield return null;
     }
 
-    public void DropPowerUp()
+    public void DropPowerUp(float p_upForce)
     {
         if (!_capsuleDestroyed)
         {
             _capsuleDestroyed = true;
 
-            _powerUpAnimator.SetTrigger("Hit");
+            if (p_upForce == 4f)
+                _powerUpAnimator.SetTrigger("Hit");
+            else
+                _powerUpAnimator.SetTrigger("SkipExplosionAnim");
+
             _powerUpAnimator.SetTrigger(PowerUpType.ToString());
 
             _powerUpRigidbody.bodyType = RigidbodyType2D.Dynamic;
@@ -75,7 +79,7 @@ public class PowerUpController : MonoBehaviour
             _powerUpRigidbody.velocity = new Vector2(0f, 0f);
 
             _powerUpRigidbody.AddForce(new Vector2(1f, 0f), ForceMode2D.Impulse);
-            _powerUpRigidbody.AddForce(new Vector2(0f, 4f), ForceMode2D.Impulse);
+            _powerUpRigidbody.AddForce(new Vector2(0f, p_upForce), ForceMode2D.Impulse);
         }
     }
 
@@ -83,7 +87,10 @@ public class PowerUpController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<PlayerManager>().CurrentWeapon = PowerUpType;
+            if (PowerUpType != Weapon.RAPID)
+                collision.gameObject.GetComponent<PlayerManager>().CurrentWeapon = PowerUpType;
+            else
+                collision.gameObject.GetComponent<PlayerManager>().ShotSpeedModificator = 1.5f;
             _autoDestroy = true;
         }
     }

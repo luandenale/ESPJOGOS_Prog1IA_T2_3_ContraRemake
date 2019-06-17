@@ -25,6 +25,7 @@ public class PlayerManager : MonoBehaviour
     public bool IsPlayerWalking { get; private set; }
     public bool IsAimingUp { get; private set; }
     public bool IsAimingDown { get; private set; }
+    public float ShotSpeedModificator = 1f;
 
     private Rigidbody2D _playerRigidBody;
     private SpriteRenderer _playerSprite;

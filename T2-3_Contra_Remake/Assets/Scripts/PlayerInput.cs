@@ -82,11 +82,98 @@ public class PlayerInput: MonoBehaviour
 
             ShotSpawnPoint.localPosition = SetSpawnPoint();
 
-            InstantiateShot();
+            if (PlayerManager.instance.CurrentWeapon == Weapon.LASER)
+                StartCoroutine(IntantiateLaserShot());
+            else
+                InstantiateShot();
 
             PlayerManager.instance.IsPlayerShooting = true;
         }
 
+    }
+
+    private IEnumerator IntantiateLaserShot()
+    {
+        Vector3 __originalPosition = ShotSpawnPoint.position;
+        Quaternion __originalRotation;
+        Vector2 __originalDirection;
+
+        // Aiming up
+        if (PlayerManager.instance.PlayerDirection.y == 1f)
+        {
+            // Straight Up
+            if (!PlayerManager.instance.IsPlayerWalking)
+            {
+                __originalRotation = Quaternion.Euler(0, 0, -90);
+                __originalDirection = new Vector2(-1f, 0f);
+            }
+            // Diagonal
+            else
+            {
+                // Left
+                if (PlayerManager.instance.PlayerDirection.x == 1f)
+                {
+                    __originalRotation = Quaternion.Euler(0, 0, 45);
+                    __originalDirection = new Vector2(1f, 0f);
+                }
+                // Right
+                else
+                {
+                    __originalRotation = Quaternion.Euler(0, 0, -45);
+                    __originalDirection = new Vector2(-1f, 0f);
+                }
+            }
+        }
+        // Aiming Down
+        else if (PlayerManager.instance.PlayerDirection.y == -1f)
+        {
+            // Straight Down
+            if (!PlayerManager.instance.IsPlayerTouchingGround)
+            {
+                __originalRotation = Quaternion.Euler(0, 0, -90);
+                __originalDirection = new Vector2(1f, 0f);
+            }
+            else if (!PlayerManager.instance.IsPlayerWalking)
+            {
+                __originalRotation = Quaternion.identity;
+                __originalDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, 0f);
+            }
+            // Diagonal
+            else
+            {
+                // Left
+                if (PlayerManager.instance.PlayerDirection.x == 1f)
+                {
+                    __originalRotation = Quaternion.Euler(0, 0, -45);
+                    __originalDirection = new Vector2(1f, 0f);
+                }
+                // Right
+                else
+                {
+                    __originalRotation = Quaternion.Euler(0, 0, 45);
+                    __originalDirection = new Vector2(-1f, 0f);
+                }
+            }
+        }
+        else
+        {
+            __originalRotation = Quaternion.identity;
+            __originalDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, 0f);
+        }
+
+        for (int i=0; i<5; i++)
+        {
+            GameObject __firedShot;
+
+            __firedShot = Instantiate(_shot, __originalPosition, __originalRotation);
+            __firedShot.GetComponent<ShotController>().shotDirection = __originalDirection;
+
+            __firedShot.GetComponent<ShotController>().shotSpeed = 15f * PlayerManager.instance.ShotSpeedModificator;
+            __firedShot.GetComponent<ShotController>().shotType = "Laser";
+            __firedShot.GetComponent<ShotController>().shotDamage = 7.5f;
+
+            yield return new WaitForSeconds(0.005f);
+        }
     }
 
     private IEnumerator GunCoolingDownRoutine()
@@ -96,7 +183,7 @@ public class PlayerInput: MonoBehaviour
         switch (PlayerManager.instance.CurrentWeapon)
         {
             case Weapon.MACHINEGUN:
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.15f);
                 break;
             case Weapon.SPREAD:
                 yield return new WaitForSeconds(0.3f);
@@ -120,9 +207,21 @@ public class PlayerInput: MonoBehaviour
             float __dir = -0.2f;
             for (int i = 0; i < 5; i++)
             {
-                GameObject __spreadShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.identity);
+                float __shotOffset = 0;
+                Vector3 __shotPosition;
 
-                __spreadShot.GetComponent<ShotController>().shotSpeed = 10f;
+                if (i == 0 || i == 4)
+                    __shotOffset = 0;
+                else if (i == 1 || i == 3)
+                    __shotOffset = 0.3f;
+                else
+                    __shotOffset = 0.6f;
+
+                __shotPosition = new Vector3(ShotSpawnPoint.position.x + __shotOffset, ShotSpawnPoint.position.y, ShotSpawnPoint.position.z);
+
+                GameObject __spreadShot = Instantiate(_shot, __shotPosition, Quaternion.identity);
+
+                __spreadShot.GetComponent<ShotController>().shotSpeed = 12.5f * PlayerManager.instance.ShotSpeedModificator;
                 __spreadShot.GetComponent<ShotController>().shotType = "Spread";
                 __spreadShot.GetComponent<ShotController>().shotDamage = 10f;
 
@@ -151,84 +250,11 @@ public class PlayerInput: MonoBehaviour
                 __dir += 0.1f;
             }
         }
-        else if (PlayerManager.instance.CurrentWeapon == Weapon.LASER)
-        {
-            GameObject __firedShot;
-
-            
-            // Aiming up
-            if (PlayerManager.instance.PlayerDirection.y == 1f)
-            {
-                // Straight Up
-                if (!PlayerManager.instance.IsPlayerWalking)
-                {
-                    __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.Euler(0, 0, -90));
-                    __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(-1f, 0f);
-                }
-                // Diagonal
-                else
-                {
-                    // Left
-                    if(PlayerManager.instance.PlayerDirection.x == 1f)
-                    {
-                        __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.Euler(0, 0, 45));
-                        __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(1f, 0f);
-                    }
-                    // Right
-                    else
-                    {
-                        __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.Euler(0, 0, -45));
-                        __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(-1f, 0f);
-                    }
-                }
-            }
-            // Aiming Down
-            else if (PlayerManager.instance.PlayerDirection.y == -1f)
-            {
-                // Straight Down
-                if (!PlayerManager.instance.IsPlayerTouchingGround)
-                {
-                    __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.Euler(0, 0, -90));
-                    __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(1f, 0f);
-                }
-                else if (!PlayerManager.instance.IsPlayerWalking)
-                {
-                    __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.identity);
-                    __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, 0f);
-                }
-                // Diagonal
-                else
-                {
-                    // Left
-                    if (PlayerManager.instance.PlayerDirection.x == 1f)
-                    {
-                        __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.Euler(0, 0, -45));
-                        __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(1f, 0f);
-                    }
-                    // Right
-                    else
-                    {
-                        __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.Euler(0, 0, 45));
-                        __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(-1f, 0f);
-                    }
-                }
-            }
-            else
-            {
-                __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.identity);
-                __firedShot.GetComponent<ShotController>().shotDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, 0f);
-            }
-
-            __firedShot.GetComponent<ShotController>().shotSpeed = 10f;
-            __firedShot.GetComponent<ShotController>().shotType = "Laser";
-            __firedShot.GetComponent<ShotController>().shotDamage = 7.5f;
-
-        }
         else
         {
             GameObject __firedShot = Instantiate(_shot, ShotSpawnPoint.position, Quaternion.identity);
 
-            __firedShot.GetComponent<ShotController>().shotSpeed = 10f;
+            __firedShot.GetComponent<ShotController>().shotSpeed = 12.5f * PlayerManager.instance.ShotSpeedModificator;
 
             if (PlayerManager.instance.CurrentWeapon == Weapon.REGULAR)
             {
@@ -242,8 +268,9 @@ public class PlayerInput: MonoBehaviour
             }
             else if (PlayerManager.instance.CurrentWeapon == Weapon.FIRE)
             {
+                __firedShot.GetComponent<ShotController>().shotSpeed = 7.5f * PlayerManager.instance.ShotSpeedModificator;
                 __firedShot.GetComponent<ShotController>().shotType = "Fire";
-                __firedShot.GetComponent<ShotController>().shotDamage = 7.5f;
+                __firedShot.GetComponent<ShotController>().shotDamage = 12.5f;
             }
 
             if (PlayerManager.instance.IsPlayerWalking)
