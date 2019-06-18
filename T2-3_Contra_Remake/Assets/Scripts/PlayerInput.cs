@@ -207,17 +207,25 @@ public class PlayerInput: MonoBehaviour
             float __dir = -0.2f;
             for (int i = 0; i < 5; i++)
             {
-                float __shotOffset = 0;
+                float __xShotOffset = 0;
+                float __yShotOffset = 0;
                 Vector3 __shotPosition;
+                float __xFactor = PlayerManager.instance.PlayerDirection.x;
+                float __yFactor = PlayerManager.instance.PlayerDirection.y;
 
                 if (i == 0 || i == 4)
-                    __shotOffset = 0;
+                    __xShotOffset = __yShotOffset = 0;
                 else if (i == 1 || i == 3)
-                    __shotOffset = 0.3f;
+                    __xShotOffset = __yShotOffset = 0.2f;
                 else
-                    __shotOffset = 0.6f;
+                    __xShotOffset = __yShotOffset = 0.4f;
 
-                __shotPosition = new Vector3(ShotSpawnPoint.position.x + __shotOffset, ShotSpawnPoint.position.y, ShotSpawnPoint.position.z);
+                if (PlayerManager.instance.IsPlayerWalking)
+                    __shotPosition = new Vector3(ShotSpawnPoint.position.x + (__xShotOffset * __xFactor), ShotSpawnPoint.position.y + (__yShotOffset * __yFactor), ShotSpawnPoint.position.z);
+                else if(PlayerManager.instance.PlayerDirection.y == 1f || !PlayerManager.instance.IsPlayerTouchingGround)
+                    __shotPosition = new Vector3(ShotSpawnPoint.position.x, ShotSpawnPoint.position.y + (__yShotOffset * __yFactor), ShotSpawnPoint.position.z);
+                else
+                    __shotPosition = new Vector3(ShotSpawnPoint.position.x + (__xShotOffset * __xFactor), ShotSpawnPoint.position.y, ShotSpawnPoint.position.z);
 
                 GameObject __spreadShot = Instantiate(_shot, __shotPosition, Quaternion.identity);
 
@@ -231,8 +239,6 @@ public class PlayerInput: MonoBehaviour
                         __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, PlayerManager.instance.PlayerDirection.y + __dir);
                     else
                     {
-                        float __xFactor = PlayerManager.instance.PlayerDirection.x;
-                        float __yFactor = PlayerManager.instance.PlayerDirection.y;
 
                         __spreadShot.GetComponent<ShotController>().shotDirection = new Vector2(PlayerManager.instance.PlayerDirection.x + (__xFactor * __dir), PlayerManager.instance.PlayerDirection.y - (__yFactor * __dir));
                     }

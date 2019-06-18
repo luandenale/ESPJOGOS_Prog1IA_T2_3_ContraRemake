@@ -816,7 +816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 893f7106c8a30cd4b9116b72e2dd037d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentWeapon: 3
+  CurrentWeapon: 5
   PlayerDirection: {x: 1, y: 0}
   PlayerJumped: 0
   PlayerJumpingDown: 0
