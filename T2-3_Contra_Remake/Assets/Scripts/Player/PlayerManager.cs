@@ -27,6 +27,8 @@ public class PlayerManager : MonoBehaviour
     public bool IsAimingDown { get; private set; }
     public float ShotSpeedModificator = 1f;
 
+    public bool PlayerDied;
+
     private Rigidbody2D _playerRigidBody;
     private SpriteRenderer _playerSprite;
 
@@ -40,6 +42,7 @@ public class PlayerManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         _playerRigidBody = GetComponent<Rigidbody2D>();
+        PlayerDied = false;
     }
 
     private void Update()
@@ -73,6 +76,15 @@ public class PlayerManager : MonoBehaviour
                 _playerRigidBody.AddForce(new Vector3(0f, -1f, 0f), ForceMode2D.Impulse);
                 StartCoroutine(DisableGroundPeriodically(__platformCollider));
             }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            PlayerDied = true;
+            gameObject.layer = LayerMask.NameToLayer("Enemy");
         }
     }
 

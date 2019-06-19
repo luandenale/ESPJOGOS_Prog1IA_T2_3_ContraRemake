@@ -12,20 +12,19 @@ public class ShotController : MonoBehaviour
     [SerializeField] RotatingShot _rotatingShot;
     private SpriteRenderer[] _shotsSprites;
     private BoxCollider2D _boxCollider;
+    private bool _hit;
 
     private void Awake()
     {
+        _hit = false;
         _shotsSprites = GetComponentsInChildren<SpriteRenderer>();
         _boxCollider = GetComponent<BoxCollider2D>();
     }
 
-    private void Start()
-    {
-        Destroy(gameObject, 2f);
-    }
-
     private void Update()
     {
+
+
         if(shotType == "Fire")
             _rotatingShot.activate = true;
 
@@ -53,8 +52,18 @@ public class ShotController : MonoBehaviour
                 _boxCollider.size = new Vector2(0.5f, 0.15f);
                 break;
         }
+        if (_hit)
+        {
+            GetComponent<Animator>().SetTrigger("Hit");
+            _boxCollider.enabled = false;
+            Destroy(gameObject, 0.25f);
+        }else
+            transform.Translate(shotDirection * shotSpeed * Time.deltaTime);
+    }
 
-        transform.Translate(shotDirection * shotSpeed * Time.deltaTime);
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -62,9 +71,22 @@ public class ShotController : MonoBehaviour
         if(shotType != "Fire")
         {
             if(collision.tag == "PowerUp")
+            {
+                _hit = true;
                 collision.GetComponent<PowerUpController>().DropPowerUp(4f);
+            }
             else if(collision.tag == "StaticPowerUp")
-                collision.GetComponent<StaticPowerUp>().DropPowerUp();
+            {
+                _hit = true;
+                if (collision.GetComponent<StaticPowerUp>().canExplode)
+                    collision.GetComponent<StaticPowerUp>().DropPowerUp();
+            }
+            else if(collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            {
+                _hit = true;
+                if (collision.GetComponent<RunnerEnemyController>() != null)
+                    collision.GetComponent<RunnerEnemyController>().hit = true;
+            }
         }
     }
 }

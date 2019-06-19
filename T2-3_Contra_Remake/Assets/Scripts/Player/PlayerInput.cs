@@ -23,6 +23,7 @@ public class PlayerInput: MonoBehaviour
     private BoxCollider2D _playerCollider;
     private SpawnPointPositions _spawnPositions = new SpawnPointPositions();
     private bool _gunCooledDown = true;
+    private bool _triggeredDeath = false;
 
     private void Awake()
     {
@@ -32,62 +33,73 @@ public class PlayerInput: MonoBehaviour
 
     private void Update()
     {
-        // Horizontal movement
-        if(Input.GetAxis("Horizontal") != 0)
+        if (!PlayerManager.instance.PlayerDied)
         {
-            float __walkingDelta = Input.GetAxisRaw("Horizontal") * _walkSpeed;
-            _playerRigidBody.velocity = new Vector2(__walkingDelta, _playerRigidBody.velocity.y);
-
-            if(__walkingDelta != 0f)
-                PlayerManager.instance.PlayerDirection = new Vector2(__walkingDelta/_walkSpeed, PlayerManager.instance.PlayerDirection.y);
-        }
-
-        // Vertical Direction
-        if (Input.GetAxis("Vertical") != 0)
-            PlayerManager.instance.PlayerDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, Input.GetAxisRaw("Vertical"));
-        else
-            PlayerManager.instance.PlayerDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, 0f);
-
-        // Jump Action
-        if (Input.GetKeyDown(KeyCode.X) && PlayerManager.instance.IsPlayerTouchingGround)
-        {
-            // Check if its trying to jump down through floor
-            if(PlayerManager.instance.PlayerDirection.y < 0)
+            // Horizontal movement
+            if(Input.GetAxis("Horizontal") != 0)
             {
-                PlayerManager.instance.PlayerJumpingDown = true;
+                float __walkingDelta = Input.GetAxisRaw("Horizontal") * _walkSpeed;
+                _playerRigidBody.velocity = new Vector2(__walkingDelta, _playerRigidBody.velocity.y);
+
+                if(__walkingDelta != 0f)
+                    PlayerManager.instance.PlayerDirection = new Vector2(__walkingDelta/_walkSpeed, PlayerManager.instance.PlayerDirection.y);
             }
-            // Regular jump
+
+            // Vertical Direction
+            if (Input.GetAxis("Vertical") != 0)
+                PlayerManager.instance.PlayerDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, Input.GetAxisRaw("Vertical"));
             else
+                PlayerManager.instance.PlayerDirection = new Vector2(PlayerManager.instance.PlayerDirection.x, 0f);
+
+            // Jump Action
+            if (Input.GetKeyDown(KeyCode.X) && PlayerManager.instance.IsPlayerTouchingGround)
             {
-                PlayerManager.instance.PlayerJumped = true;
-                _playerRigidBody.AddForce(new Vector3(0f, 7f, 0f), ForceMode2D.Impulse);
-                PlayerManager.instance.IsPlayerTouchingGround = false;
+                // Check if its trying to jump down through floor
+                if(PlayerManager.instance.PlayerDirection.y < 0)
+                {
+                    PlayerManager.instance.PlayerJumpingDown = true;
+                }
+                // Regular jump
+                else
+                {
+                    PlayerManager.instance.PlayerJumped = true;
+                    _playerRigidBody.AddForce(new Vector3(0f, 7f, 0f), ForceMode2D.Impulse);
+                    PlayerManager.instance.IsPlayerTouchingGround = false;
+                }
             }
-        }
 
-        // Shooting Action
-        if(Input.GetKey(KeyCode.Z) && PlayerManager.instance.CurrentWeapon == Weapon.MACHINEGUN && _gunCooledDown)
-        {
-            StartCoroutine(GunCoolingDownRoutine());
+            // Shooting Action
+            if(Input.GetKey(KeyCode.Z) && PlayerManager.instance.CurrentWeapon == Weapon.MACHINEGUN && _gunCooledDown)
+            {
+                StartCoroutine(GunCoolingDownRoutine());
 
-            ShotSpawnPoint.localPosition = SetSpawnPoint();
+                ShotSpawnPoint.localPosition = SetSpawnPoint();
 
-            InstantiateShot();
-
-            PlayerManager.instance.IsPlayerShooting = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.Z) && _gunCooledDown)
-        {
-            StartCoroutine(GunCoolingDownRoutine());
-
-            ShotSpawnPoint.localPosition = SetSpawnPoint();
-
-            if (PlayerManager.instance.CurrentWeapon == Weapon.LASER)
-                StartCoroutine(IntantiateLaserShot());
-            else
                 InstantiateShot();
 
-            PlayerManager.instance.IsPlayerShooting = true;
+                PlayerManager.instance.IsPlayerShooting = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.Z) && _gunCooledDown)
+            {
+                StartCoroutine(GunCoolingDownRoutine());
+
+                ShotSpawnPoint.localPosition = SetSpawnPoint();
+
+                if (PlayerManager.instance.CurrentWeapon == Weapon.LASER)
+                    StartCoroutine(IntantiateLaserShot());
+                else
+                    InstantiateShot();
+
+                PlayerManager.instance.IsPlayerShooting = true;
+            }
+        }
+        else
+        {
+            if(!_triggeredDeath)
+            {
+                _triggeredDeath = true;
+                _playerRigidBody.AddForce(new Vector2(-PlayerManager.instance.PlayerDirection.x * 2f, 4.5f), ForceMode2D.Impulse);
+            }
         }
 
     }

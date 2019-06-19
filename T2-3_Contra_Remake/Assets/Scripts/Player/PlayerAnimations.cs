@@ -23,6 +23,7 @@ public class PlayerAnimations : MonoBehaviour
     private bool _coolingDown = false;
     private Coroutine _coolingDownStraightRoutineReference = null;
     private Coroutine _currentShootingRoutineReference = null;
+    private bool _triggeredDeath = false;
 
     private void Awake()
     {
@@ -31,28 +32,39 @@ public class PlayerAnimations : MonoBehaviour
 
     private void Update()
     {
-        FlipSprites();
-
-        // Player is touching the ground
-        if (PlayerManager.instance.IsPlayerTouchingGround)
+        if (!PlayerManager.instance.PlayerDied)
         {
-            OnTheGroundAnimations();
+            FlipSprites();
+
+            // Player is touching the ground
+            if (PlayerManager.instance.IsPlayerTouchingGround)
+            {
+                OnTheGroundAnimations();
+            }
+            // Player on the air
+            else
+            {
+                SetActiveSprite(0);
+                OnTheAirAnimation();
+            }
+
+            // Shooting Animation
+            if (PlayerManager.instance.IsPlayerShooting)
+            {
+                _playerAnim.SetBool(AnimTriggers.IsShooting, true);
+                PlayerManager.instance.IsPlayerShooting = false;
+            }
+            else
+                _playerAnim.SetBool(AnimTriggers.IsShooting, false);
         }
-        // Player on the air
         else
         {
-            SetActiveSprite(0);
-            OnTheAirAnimation();
+            if (!_triggeredDeath)
+            {
+                _triggeredDeath = true;
+                _playerAnim.SetTrigger("Dead");
+            }
         }
-
-        // Shooting Animation
-        if (PlayerManager.instance.IsPlayerShooting)
-        {
-            _playerAnim.SetBool(AnimTriggers.IsShooting, true);
-            PlayerManager.instance.IsPlayerShooting = false;
-        }
-        else
-            _playerAnim.SetBool(AnimTriggers.IsShooting, false);
     }
 
     private void FlipSprites()

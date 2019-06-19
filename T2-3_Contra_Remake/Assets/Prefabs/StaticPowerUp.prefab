@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 886518947044941612}
   - component: {fileID: 886518947044941616}
   - component: {fileID: 886518947044941617}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: StaticPowerUp
   m_TagString: StaticPowerUp
   m_Icon: {fileID: 0}
@@ -143,6 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powerUp: {fileID: 4576443016708607718}
   upForce: 7
+  canExplode: 0
 --- !u!50 &886518947044941617
 Rigidbody2D:
   serializedVersion: 4

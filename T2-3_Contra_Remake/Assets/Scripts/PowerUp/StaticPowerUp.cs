@@ -7,9 +7,11 @@ public class StaticPowerUp : MonoBehaviour
     [SerializeField] GameObject powerUp;
     [SerializeField] float upForce;
     private Animator _staticPowerUpAnimator;
+    public bool canExplode;
 
     private void Awake()
     {
+        canExplode = false;
         _staticPowerUpAnimator = GetComponent<Animator>();
     }
 

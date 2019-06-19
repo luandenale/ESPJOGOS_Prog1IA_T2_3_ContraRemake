@@ -60,13 +60,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\PlayerAnimations.cs" />
-    <Compile Include="Assets\Scripts\PlayerInput.cs" />
-    <Compile Include="Assets\Scripts\PlayerManager.cs" />
-    <Compile Include="Assets\Scripts\PowerUpController.cs" />
-    <Compile Include="Assets\Scripts\RotatingShot.cs" />
-    <Compile Include="Assets\Scripts\ShotController.cs" />
-    <Compile Include="Assets\Scripts\StaticPowerUp.cs" />
+    <Compile Include="Assets\Scripts\Enemy\RunnerEnemyController.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerAnimations.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerInput.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerManager.cs" />
+    <Compile Include="Assets\Scripts\PowerUp\PowerUpController.cs" />
+    <Compile Include="Assets\Scripts\PowerUp\StaticPowerUp.cs" />
+    <Compile Include="Assets\Scripts\Shot\RotatingShot.cs" />
+    <Compile Include="Assets\Scripts\Shot\ShotController.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Work/Documents/ContraRemake/T2-3_Contra_Remake/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
