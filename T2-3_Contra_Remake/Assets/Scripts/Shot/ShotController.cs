@@ -23,8 +23,6 @@ public class ShotController : MonoBehaviour
 
     private void Update()
     {
-
-
         if(shotType == "Fire")
             _rotatingShot.activate = true;
 
@@ -86,6 +84,8 @@ public class ShotController : MonoBehaviour
                 _hit = true;
                 if (collision.GetComponent<RunnerEnemyController>() != null)
                     collision.GetComponent<RunnerEnemyController>().hit = true;
+                else if (collision.GetComponent<NormalCannonEnemyController>() != null)
+                    collision.GetComponent<NormalCannonEnemyController>().life -= shotDamage;
             }
         }
     }

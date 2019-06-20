@@ -44,3 +44,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3053288021
+    locked: 0
+  - name: PowerUp
+    uniqueID: 453267349
+    locked: 0
+  - name: Character
+    uniqueID: 2566253815
+    locked: 0
+  - name: Shot
+    uniqueID: 1087484869
+    locked: 0

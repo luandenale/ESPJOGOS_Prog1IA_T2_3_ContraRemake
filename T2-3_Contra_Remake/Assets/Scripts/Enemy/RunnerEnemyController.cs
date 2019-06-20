@@ -6,25 +6,38 @@ public class RunnerEnemyController : MonoBehaviour
 {
     public bool hit;
     private bool _destroyed;
+    private bool _visible;
     private Rigidbody2D _rigidbody2D;
     private BoxCollider2D _collider2D;
     private Animator _animator;
+
 
     private void Start()
     {
         hit = false;
         _destroyed = false;
+        _visible = false;
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _collider2D = GetComponent<BoxCollider2D>();
         _animator = GetComponent<Animator>();
     }
 
+    private void OnBecameInvisible()
+    {
+        _visible = false;
+    }
+
+    private void OnBecameVisible()
+    {
+        _visible = true;
+    }
 
     private void Update()
     {
         if (!hit)
         {
-            transform.Translate(new Vector2(-3.5f, 0f) * Time.deltaTime);
+            if(_visible)
+                transform.Translate(new Vector2(-3.5f, 0f) * Time.deltaTime);
         }
         else
         {
