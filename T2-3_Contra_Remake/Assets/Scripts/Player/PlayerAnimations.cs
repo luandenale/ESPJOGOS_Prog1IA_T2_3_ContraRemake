@@ -5,8 +5,10 @@ using UnityEngine;
 public struct AnimTriggers
 {
     public const string Jump = "Jump";
+    public const string DiveWater = "DiveWater";
 
     public const string OnGround = "OnGround";
+    public const string OnWater = "OnWater";
     public const string IsShooting = "IsShooting";
     public const string IsWalking = "IsWalking";
     public const string IsAimingUp = "IsAimingUp";
@@ -40,6 +42,14 @@ public class PlayerAnimations : MonoBehaviour
             if (PlayerManager.instance.IsPlayerTouchingGround)
             {
                 OnTheGroundAnimations();
+            }
+            // Player is on the water
+            else if (PlayerManager.instance.IsPlayerTouchingWater)
+            {
+                if(!_playerAnim.GetBool(AnimTriggers.OnWater))
+                    _playerAnim.SetTrigger(AnimTriggers.DiveWater);
+                SetActiveSprite(0);
+                OnTheWaterAnimations();
             }
             // Player on the air
             else
@@ -78,9 +88,28 @@ public class PlayerAnimations : MonoBehaviour
                     Sprites[i].flipX = true;
     }
 
+    private void OnTheWaterAnimations()
+    {
+        _playerAnim.SetBool(AnimTriggers.OnWater, true);
+        _playerAnim.SetBool(AnimTriggers.OnGround, false);
+
+        // Set aim up and down triggers
+        if (PlayerManager.instance.PlayerDirection.y > 0)
+            _playerAnim.SetBool(AnimTriggers.IsAimingUp, true);
+        else
+            _playerAnim.SetBool(AnimTriggers.IsAimingUp, false);
+
+        // Set walking anim
+        if (PlayerManager.instance.IsPlayerWalking)
+            _playerAnim.SetBool(AnimTriggers.IsWalking, true);
+        else
+            _playerAnim.SetBool(AnimTriggers.IsWalking, false);
+    }
+
     private void OnTheGroundAnimations()
     {
         _playerAnim.SetBool(AnimTriggers.OnGround, true);
+        _playerAnim.SetBool(AnimTriggers.OnWater, false);
 
         // Set aim up and down triggers
         if (PlayerManager.instance.PlayerDirection.y > 0 && !PlayerManager.instance.IsPlayerWalking)

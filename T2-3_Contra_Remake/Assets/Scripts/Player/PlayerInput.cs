@@ -10,6 +10,10 @@ public class SpawnPointPositions
     public Vector3 JumpingPosition = new Vector3(0f, 0.9f, 0f);
     public Vector3 DiagonalUpPosition = new Vector3(0.4f, 1.45f, 0f);
     public Vector3 DiagonalDownPosition = new Vector3(0.5f, 0.7f, 0f);
+
+    public Vector3 WaterRegularPosition = new Vector3(0.7f, 0.4f, 0f);
+    public Vector3 WaterDiagonalPosition = new Vector3(0.45f, 0.92f, 0f);
+    public Vector3 WaterUpPosition = new Vector3(0.235f, 1.31f, 0f);
 }
 
 public class PlayerInput: MonoBehaviour
@@ -69,7 +73,8 @@ public class PlayerInput: MonoBehaviour
             }
 
             // Shooting Action
-            if(Input.GetKey(KeyCode.Z) && PlayerManager.instance.CurrentWeapon == Weapon.MACHINEGUN && _gunCooledDown)
+            if(Input.GetKey(KeyCode.Z) && PlayerManager.instance.CurrentWeapon == Weapon.MACHINEGUN && _gunCooledDown && 
+                !(PlayerManager.instance.IsPlayerTouchingWater && PlayerManager.instance.PlayerDirection.y == -1f))
             {
                 StartCoroutine(GunCoolingDownRoutine());
 
@@ -79,7 +84,8 @@ public class PlayerInput: MonoBehaviour
 
                 PlayerManager.instance.IsPlayerShooting = true;
             }
-            else if (Input.GetKeyDown(KeyCode.Z) && _gunCooledDown)
+            else if (Input.GetKeyDown(KeyCode.Z) && _gunCooledDown &&
+                !(PlayerManager.instance.IsPlayerTouchingWater && PlayerManager.instance.PlayerDirection.y == -1f))
             {
                 StartCoroutine(GunCoolingDownRoutine());
 
@@ -311,24 +317,42 @@ public class PlayerInput: MonoBehaviour
 
         // Shooting regular
         if (!PlayerManager.instance.IsAimingDown && !PlayerManager.instance.IsAimingUp)
-            __spawnPoint = _spawnPositions.RegularPosition;
+        {
+            if(!PlayerManager.instance.IsPlayerTouchingWater)
+                __spawnPoint = _spawnPositions.RegularPosition;
+            else
+                __spawnPoint = _spawnPositions.WaterRegularPosition;
+        }
         // Shooting crouched
-        if (PlayerManager.instance.PlayerDirection.y == -1f && !PlayerManager.instance.IsPlayerWalking)
+        if (PlayerManager.instance.PlayerDirection.y == -1f && !PlayerManager.instance.IsPlayerWalking && !PlayerManager.instance.IsPlayerTouchingWater)
         {
             __spawnPoint = _spawnPositions.CrouchPosition;
         }
         // Shooting Up
         if (PlayerManager.instance.PlayerDirection.y == 1f && !PlayerManager.instance.IsPlayerWalking)
-            __spawnPoint = _spawnPositions.StraightUpPosition;
+        {
+            if (!PlayerManager.instance.IsPlayerTouchingWater)
+                __spawnPoint = _spawnPositions.StraightUpPosition;
+            else
+                __spawnPoint = _spawnPositions.WaterUpPosition;
+        }
         // Shooting MidAir
-        if (!PlayerManager.instance.IsPlayerTouchingGround)
+        if (!PlayerManager.instance.IsPlayerTouchingGround && !PlayerManager.instance.IsPlayerTouchingWater)
             __spawnPoint = _spawnPositions.JumpingPosition;
         if (PlayerManager.instance.IsPlayerWalking)
         {
             if (PlayerManager.instance.PlayerDirection.y == 1f)
-                __spawnPoint = _spawnPositions.DiagonalUpPosition;
+            {
+                if (!PlayerManager.instance.IsPlayerTouchingWater)
+                    __spawnPoint = _spawnPositions.DiagonalUpPosition;
+                else
+                    __spawnPoint = _spawnPositions.WaterDiagonalPosition;
+            }
             else if (PlayerManager.instance.PlayerDirection.y == -1f)
-                __spawnPoint = _spawnPositions.DiagonalDownPosition;
+            {
+                if (!PlayerManager.instance.IsPlayerTouchingWater)
+                    __spawnPoint = _spawnPositions.DiagonalDownPosition;
+            }
         }
 
         if (PlayerManager.instance.PlayerDirection.x < 0)

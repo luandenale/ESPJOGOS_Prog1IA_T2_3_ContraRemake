@@ -21,6 +21,7 @@ public class PlayerManager : MonoBehaviour
     public bool PlayerJumped = false;
     public bool PlayerJumpingDown = false;
     public bool IsPlayerTouchingGround;
+    public bool IsPlayerTouchingWater;
     public bool IsPlayerShooting;
     public bool IsPlayerWalking { get; private set; }
     public bool IsAimingUp { get; private set; }
@@ -62,6 +63,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (p_collision.gameObject.tag == "Ground")
         {
+            IsPlayerTouchingWater = false;
             // Check if its firmly on the floor
             if(_playerRigidBody.velocity.y == 0)
                 IsPlayerTouchingGround = true;
@@ -76,6 +78,10 @@ public class PlayerManager : MonoBehaviour
                 _playerRigidBody.AddForce(new Vector3(0f, -1f, 0f), ForceMode2D.Impulse);
                 StartCoroutine(DisableGroundPeriodically(__platformCollider));
             }
+        }
+        else if (p_collision.gameObject.tag == "Water")
+        {
+            IsPlayerTouchingWater = true;
         }
     }
 
