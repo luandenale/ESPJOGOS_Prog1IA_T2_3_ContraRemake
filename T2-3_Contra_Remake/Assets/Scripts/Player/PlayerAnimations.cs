@@ -6,6 +6,7 @@ public struct AnimTriggers
 {
     public const string Jump = "Jump";
     public const string DiveWater = "DiveWater";
+    public const string GettingOutOfWater = "GettingOutOfWater";
 
     public const string OnGround = "OnGround";
     public const string OnWater = "OnWater";
@@ -38,6 +39,8 @@ public class PlayerAnimations : MonoBehaviour
         {
             FlipSprites();
 
+            if (PlayerManager.instance.IsPlayerGettingOutOfWater)
+                _playerAnim.SetTrigger(AnimTriggers.GettingOutOfWater);
             // Player is touching the ground
             if (PlayerManager.instance.IsPlayerTouchingGround)
             {

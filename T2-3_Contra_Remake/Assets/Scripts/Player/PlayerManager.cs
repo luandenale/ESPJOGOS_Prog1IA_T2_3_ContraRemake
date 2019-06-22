@@ -18,14 +18,18 @@ public class PlayerManager : MonoBehaviour
 
     public Weapon CurrentWeapon;
     public Vector2 PlayerDirection;
+
     public bool PlayerJumped = false;
     public bool PlayerJumpingDown = false;
+
     public bool IsPlayerTouchingGround;
     public bool IsPlayerTouchingWater;
+    public bool IsPlayerGettingOutOfWater;
     public bool IsPlayerShooting;
     public bool IsPlayerWalking { get; private set; }
     public bool IsAimingUp { get; private set; }
     public bool IsAimingDown { get; private set; }
+
     public float ShotSpeedModificator = 1f;
 
     public bool PlayerDied;
@@ -64,6 +68,7 @@ public class PlayerManager : MonoBehaviour
         if (p_collision.gameObject.tag == "Ground")
         {
             IsPlayerTouchingWater = false;
+
             // Check if its firmly on the floor
             if(_playerRigidBody.velocity.y == 0)
                 IsPlayerTouchingGround = true;
@@ -92,6 +97,20 @@ public class PlayerManager : MonoBehaviour
             PlayerDied = true;
             gameObject.layer = LayerMask.NameToLayer("Enemy");
         }
+
+        if (collision.gameObject.tag == "Ground" && IsPlayerTouchingWater)
+        {
+            IsPlayerGettingOutOfWater = true;
+            StartCoroutine(GetOutOfWater());
+        }
+    }
+
+    private IEnumerator GetOutOfWater()
+    {
+        _playerRigidBody.velocity = new Vector2(0f,0f);
+        yield return new WaitForSeconds(0.1f);
+        transform.position = new Vector3(transform.position.x + 0.25f, -4.16f, 0f);
+        IsPlayerGettingOutOfWater = false;
     }
 
     private IEnumerator DisableGroundPeriodically(BoxCollider2D p_collider)
