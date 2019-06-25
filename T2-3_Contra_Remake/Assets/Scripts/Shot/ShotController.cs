@@ -71,25 +71,45 @@ public class ShotController : MonoBehaviour
             if(collision.tag == "PowerUp")
             {
                 _hit = true;
+                AudioManager.instance.PlayPowerUpExplode();
                 collision.GetComponent<PowerUpController>().DropPowerUp(4f);
             }
             else if(collision.tag == "StaticPowerUp")
             {
                 _hit = true;
                 if (collision.GetComponent<StaticPowerUp>().canExplode)
+                {
+                    AudioManager.instance.PlayPowerUpExplode();
                     collision.GetComponent<StaticPowerUp>().DropPowerUp();
+                }
             }
             else if(collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
                 _hit = true;
                 if (collision.GetComponent<RunnerEnemyController>() != null)
+                {
+                    AudioManager.instance.PlayEnemyExplode();
                     collision.GetComponent<RunnerEnemyController>().hit = true;
+                }
                 else if (collision.GetComponent<ShooterEnemyController>() != null)
+                {
+                    AudioManager.instance.PlayEnemyExplode();
                     collision.GetComponent<ShooterEnemyController>().hit = true;
+                }
                 else if (collision.GetComponent<NormalCannonEnemyController>() != null)
+                {
+                    AudioManager.instance.PlayHitCannon();
                     collision.GetComponent<NormalCannonEnemyController>().life -= shotDamage;
+                    if (collision.GetComponent<NormalCannonEnemyController>().life <= 0)
+                        AudioManager.instance.PlayEnemyExplode();
+                }
                 else if (collision.GetComponent<BigCannonEnemyController>() != null)
+                {
+                    AudioManager.instance.PlayHitCannon();
                     collision.GetComponent<BigCannonEnemyController>().life -= shotDamage;
+                    if(collision.GetComponent<BigCannonEnemyController>().life <= 0)
+                        AudioManager.instance.PlayEnemyExplode();
+                }
             }
         }
     }

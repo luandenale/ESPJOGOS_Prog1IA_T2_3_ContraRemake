@@ -60,12 +60,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Enemy\BigCannonEnemyController.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyShotController.cs" />
     <Compile Include="Assets\Scripts\Enemy\NormalCannonEnemyController.cs" />
     <Compile Include="Assets\Scripts\Enemy\RunnerEnemyController.cs" />
     <Compile Include="Assets\Scripts\Enemy\ShooterEnemyController.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnimations.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInput.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerManager.cs" />

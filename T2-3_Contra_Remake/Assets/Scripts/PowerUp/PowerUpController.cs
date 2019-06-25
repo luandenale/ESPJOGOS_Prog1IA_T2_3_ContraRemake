@@ -87,6 +87,7 @@ public class PowerUpController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            AudioManager.instance.PlayPowerUpPick();
             if (PowerUpType != Weapon.RAPID)
                 collision.gameObject.GetComponent<PlayerManager>().CurrentWeapon = PowerUpType;
             else

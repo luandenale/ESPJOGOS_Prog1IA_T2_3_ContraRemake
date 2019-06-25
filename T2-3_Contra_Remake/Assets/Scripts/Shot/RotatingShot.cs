@@ -40,19 +40,45 @@ public class RotatingShot : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "PowerUp")
+        {
+            AudioManager.instance.PlayPowerUpExplode();
             collision.GetComponent<PowerUpController>().DropPowerUp(4f);
+        }
         else if (collision.tag == "StaticPowerUp")
-            collision.GetComponent<StaticPowerUp>().DropPowerUp();
+        {
+            if (collision.GetComponent<StaticPowerUp>().canExplode)
+            {
+                AudioManager.instance.PlayPowerUpExplode();
+                collision.GetComponent<StaticPowerUp>().DropPowerUp();
+            }
+        }
         else if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             if (collision.GetComponent<RunnerEnemyController>() != null)
+            {
+                AudioManager.instance.PlayEnemyExplode();
                 collision.GetComponent<RunnerEnemyController>().hit = true;
+            }
             else if (collision.GetComponent<ShooterEnemyController>() != null)
+            {
+                AudioManager.instance.PlayEnemyExplode();
                 collision.GetComponent<ShooterEnemyController>().hit = true;
+            }
             else if (collision.GetComponent<NormalCannonEnemyController>() != null)
+            {
+                AudioManager.instance.PlayHitCannon();
                 collision.GetComponent<NormalCannonEnemyController>().life -= 12.5f;
+                if (collision.GetComponent<NormalCannonEnemyController>().life <= 0)
+                    AudioManager.instance.PlayEnemyExplode();
+            }
             else if (collision.GetComponent<BigCannonEnemyController>() != null)
+            {
+                AudioManager.instance.PlayHitCannon();
                 collision.GetComponent<BigCannonEnemyController>().life -= 12.5f;
+                if (collision.GetComponent<BigCannonEnemyController>().life <= 0)
+                    AudioManager.instance.PlayEnemyExplode();
+            }
         }
     }
 }
+

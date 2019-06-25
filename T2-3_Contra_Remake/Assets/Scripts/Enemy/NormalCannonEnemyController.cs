@@ -5,6 +5,7 @@ using UnityEngine;
 public class NormalCannonEnemyController : MonoBehaviour
 {
     [SerializeField] GameObject shot;
+    [SerializeField] Transform spawnPoint;
 
     private Animator _normalCannonAnimator;
     private BoxCollider2D _normalCannonCollider;
@@ -143,7 +144,7 @@ public class NormalCannonEnemyController : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
 
-            Instantiate(shot, transform.position, Quaternion.Euler(0, 0, _zAngle));
+            Instantiate(shot, spawnPoint.position, Quaternion.Euler(0, 0, _zAngle));
         }
     }
 }

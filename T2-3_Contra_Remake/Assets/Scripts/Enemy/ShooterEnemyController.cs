@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShooterEnemyController : MonoBehaviour
 {
     [SerializeField] GameObject shot;
+    [SerializeField] Transform spawnPoint;
 
     private Animator _animator;
     private BoxCollider2D _collider;
@@ -161,7 +162,12 @@ public class ShooterEnemyController : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
 
-            Instantiate(shot, transform.position, Quaternion.Euler(0, 0, _zAngle));
+            Vector3 __shotPosition = spawnPoint.position;
+            if(_direction == Vector2.right)
+                __shotPosition = new Vector3(spawnPoint.position.x + (2* Mathf.Abs(spawnPoint.localPosition.x)), spawnPoint.position.y, spawnPoint.position.z);
+
+
+            Instantiate(shot, __shotPosition, Quaternion.Euler(0, 0, _zAngle));
         }
     }
 }

@@ -113,6 +113,7 @@ public class PlayerInput: MonoBehaviour
 
     private IEnumerator IntantiateLaserShot()
     {
+        AudioManager.instance.PlayLaserShot();
         Vector3 __originalPosition = ShotSpawnPoint.position;
         Quaternion __originalRotation;
         Vector2 __originalDirection;
@@ -223,6 +224,7 @@ public class PlayerInput: MonoBehaviour
         // Spread Shot is treated separately as it spwans 6 shots
         if (PlayerManager.instance.CurrentWeapon == Weapon.SPREAD)
         {
+            AudioManager.instance.PlaySpreadShot();
             float __dir = -0.2f;
             for (int i = 0; i < 5; i++)
             {
@@ -283,16 +285,19 @@ public class PlayerInput: MonoBehaviour
 
             if (PlayerManager.instance.CurrentWeapon == Weapon.REGULAR)
             {
+                AudioManager.instance.PlayRegularShot();
                 __firedShot.GetComponent<ShotController>().shotType = "Regular";
                 __firedShot.GetComponent<ShotController>().shotDamage = 10f;
             }
             else if (PlayerManager.instance.CurrentWeapon == Weapon.MACHINEGUN)
             {
+                AudioManager.instance.PlayMachineGunShot();
                 __firedShot.GetComponent<ShotController>().shotType = "MachineGun";
                 __firedShot.GetComponent<ShotController>().shotDamage = 10f;
             }
             else if (PlayerManager.instance.CurrentWeapon == Weapon.FIRE)
             {
+                AudioManager.instance.PlayFireShot();
                 __firedShot.GetComponent<ShotController>().shotSpeed = 7.5f * PlayerManager.instance.ShotSpeedModificator;
                 __firedShot.GetComponent<ShotController>().shotType = "Fire";
                 __firedShot.GetComponent<ShotController>().shotDamage = 12.5f;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class BigCannonEnemyController : MonoBehaviour
 {
     [SerializeField] GameObject shot;
+    [SerializeField] Transform spawnPoint;
 
     private Animator _cannonAnimator;
     private BoxCollider2D _cannonCollider;
@@ -98,11 +99,11 @@ public class BigCannonEnemyController : MonoBehaviour
         {
             yield return new WaitForSeconds(1.5f);
 
-            Instantiate(shot, transform.position, Quaternion.Euler(0, 0, _zAngle));
+            Instantiate(shot, spawnPoint.position, Quaternion.Euler(0, 0, _zAngle));
             yield return new WaitForSeconds(0.15f);
-            Instantiate(shot, transform.position, Quaternion.Euler(0, 0, _zAngle));
+            Instantiate(shot, spawnPoint.position, Quaternion.Euler(0, 0, _zAngle));
             yield return new WaitForSeconds(0.15f);
-            Instantiate(shot, transform.position, Quaternion.Euler(0, 0, _zAngle));
+            Instantiate(shot, spawnPoint.position, Quaternion.Euler(0, 0, _zAngle));
 
         }
     }

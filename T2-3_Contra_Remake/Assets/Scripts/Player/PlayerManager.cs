@@ -71,7 +71,11 @@ public class PlayerManager : MonoBehaviour
 
             // Check if its firmly on the floor
             if(_playerRigidBody.velocity.y == 0)
+            {
+                if (!IsPlayerTouchingGround)
+                    AudioManager.instance.PlayHitFloor();
                 IsPlayerTouchingGround = true;
+            }
 
             // Check to jump down through
             if (PlayerJumpingDown)
@@ -86,6 +90,8 @@ public class PlayerManager : MonoBehaviour
         }
         else if (p_collision.gameObject.tag == "Water")
         {
+            if (!IsPlayerTouchingWater && !IsPlayerGettingOutOfWater)
+                AudioManager.instance.PlayHitFloor();
             IsPlayerTouchingWater = true;
         }
     }
@@ -95,6 +101,7 @@ public class PlayerManager : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             PlayerDied = true;
+            AudioManager.instance.PlayDie();
             gameObject.layer = LayerMask.NameToLayer("Enemy");
         }
 
