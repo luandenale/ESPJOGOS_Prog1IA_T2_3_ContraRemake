@@ -104,6 +104,7 @@ public class PlayerInput: MonoBehaviour
             if(!_triggeredDeath)
             {
                 _triggeredDeath = true;
+                _playerRigidBody.velocity = new Vector2(0f, 0f);
                 _playerRigidBody.AddForce(new Vector2(-PlayerManager.instance.PlayerDirection.x * 2f, 4.5f), ForceMode2D.Impulse);
             }
         }

@@ -43,5 +43,16 @@ public class RotatingShot : MonoBehaviour
             collision.GetComponent<PowerUpController>().DropPowerUp(4f);
         else if (collision.tag == "StaticPowerUp")
             collision.GetComponent<StaticPowerUp>().DropPowerUp();
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            if (collision.GetComponent<RunnerEnemyController>() != null)
+                collision.GetComponent<RunnerEnemyController>().hit = true;
+            else if (collision.GetComponent<ShooterEnemyController>() != null)
+                collision.GetComponent<ShooterEnemyController>().hit = true;
+            else if (collision.GetComponent<NormalCannonEnemyController>() != null)
+                collision.GetComponent<NormalCannonEnemyController>().life -= 12.5f;
+            else if (collision.GetComponent<BigCannonEnemyController>() != null)
+                collision.GetComponent<BigCannonEnemyController>().life -= 12.5f;
+        }
     }
 }

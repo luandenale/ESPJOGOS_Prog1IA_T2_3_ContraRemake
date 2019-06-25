@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1388813897277236203}
   - component: {fileID: 2952006975605743750}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MachineGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8103025648395707047}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5420136437357835324}
   - component: {fileID: 4245298771613501446}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4640581990854054820}
   - component: {fileID: 1259227603429215836}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spread
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 5940046723842265504}
   - component: {fileID: 7295411059280509919}
   - component: {fileID: 5176262209559794083}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Shot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -427,7 +427,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4769906209029827521}
   - component: {fileID: 7900923207747630862}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Regular
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -508,7 +508,7 @@ GameObject:
   - component: {fileID: 6492971744579647245}
   - component: {fileID: 121081785897583726}
   - component: {fileID: 3138363851839696966}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Rotating Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}

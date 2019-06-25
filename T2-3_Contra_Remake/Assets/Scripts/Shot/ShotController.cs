@@ -84,8 +84,12 @@ public class ShotController : MonoBehaviour
                 _hit = true;
                 if (collision.GetComponent<RunnerEnemyController>() != null)
                     collision.GetComponent<RunnerEnemyController>().hit = true;
+                else if (collision.GetComponent<ShooterEnemyController>() != null)
+                    collision.GetComponent<ShooterEnemyController>().hit = true;
                 else if (collision.GetComponent<NormalCannonEnemyController>() != null)
                     collision.GetComponent<NormalCannonEnemyController>().life -= shotDamage;
+                else if (collision.GetComponent<BigCannonEnemyController>() != null)
+                    collision.GetComponent<BigCannonEnemyController>().life -= shotDamage;
             }
         }
     }

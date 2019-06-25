@@ -25,6 +25,7 @@ public class NormalCannonEnemyController : MonoBehaviour
         _zAngle = 0f;
         _normalCannonAnimator = GetComponent<Animator>();
         _normalCannonCollider = GetComponent<BoxCollider2D>();
+        shot.GetComponentsInChildren<SpriteRenderer>()[2].enabled = false;
     }
 
     private void OnBecameInvisible()
@@ -130,7 +131,7 @@ public class NormalCannonEnemyController : MonoBehaviour
                 _active = false;
                 _normalCannonAnimator.SetTrigger("Explode");
                 _normalCannonCollider.enabled = false;
-                Destroy(gameObject, 1f);
+                Destroy(gameObject, 1.1f);
             }
         }
         
