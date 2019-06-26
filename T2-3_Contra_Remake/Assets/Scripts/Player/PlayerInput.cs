@@ -205,16 +205,19 @@ public class PlayerInput: MonoBehaviour
         switch (PlayerManager.instance.CurrentWeapon)
         {
             case Weapon.MACHINEGUN:
-                yield return new WaitForSeconds(0.15f);
+                yield return new WaitForSeconds(0.075f);
                 break;
             case Weapon.SPREAD:
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(0.25f);
                 break;
             case Weapon.FIRE:
-                yield return new WaitForSeconds(0.4f);
+                yield return new WaitForSeconds(0.25f);
+                break;
+            case Weapon.LASER:
+                yield return new WaitForSeconds(0.3f);
                 break;
             default:
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(0.125f);
                 break;
         }
 
