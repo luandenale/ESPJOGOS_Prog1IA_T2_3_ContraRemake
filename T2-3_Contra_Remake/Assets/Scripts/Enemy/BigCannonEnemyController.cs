@@ -46,7 +46,7 @@ public class BigCannonEnemyController : MonoBehaviour
         {
             _active = true;
         }
-        if (_active)
+        if (_active && !PlayerManager.instance.PlayerDied)
         {
             if (life > 0)
             {
@@ -99,12 +99,14 @@ public class BigCannonEnemyController : MonoBehaviour
         {
             yield return new WaitForSeconds(1.5f);
 
-            Instantiate(shot, spawnPoint.position, Quaternion.Euler(0, 0, _zAngle));
-            yield return new WaitForSeconds(0.15f);
-            Instantiate(shot, spawnPoint.position, Quaternion.Euler(0, 0, _zAngle));
-            yield return new WaitForSeconds(0.15f);
-            Instantiate(shot, spawnPoint.position, Quaternion.Euler(0, 0, _zAngle));
-
+            if (!PlayerManager.instance.PlayerDied && life > 0f)
+            {
+                Instantiate(shot, spawnPoint.position, Quaternion.Euler(0, 0, _zAngle));
+                yield return new WaitForSeconds(0.15f);
+                Instantiate(shot, spawnPoint.position, Quaternion.Euler(0, 0, _zAngle));
+                yield return new WaitForSeconds(0.15f);
+                Instantiate(shot, spawnPoint.position, Quaternion.Euler(0, 0, _zAngle));
+            }
         }
     }
 }

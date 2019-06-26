@@ -4,15 +4,51 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] GameObject[] _UILives;
+
+    private bool _triggeredRestart;
+    private int _extraLives;
+
+    private void Start()
     {
-        Physics2D.IgnoreLayerCollision(4, 8, true);
-        
+        _triggeredRestart = false;
+        _extraLives = 2;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        if (PlayerManager.instance.PlayerDied && !_triggeredRestart )
+        {
+            if(_extraLives > 0)
+            {
+                _triggeredRestart = true;
+
+                _UILives[_extraLives].active = false;
+
+                _extraLives--;
+
+                StartCoroutine(ResetPlayer());
+            }
+            else
+            {
+                _UILives[_extraLives].active = true;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            AudioManager.instance.PlayPause();
+            if (Time.timeScale > 0f)
+                Time.timeScale = 0f;
+            else
+                Time.timeScale = 1f;
+        }
+    }
+
+    private IEnumerator ResetPlayer()
+    {
+        yield return new WaitForSeconds(1.5f);
+        PlayerManager.instance.ResetPlayer();
+        _triggeredRestart = false;
     }
 }

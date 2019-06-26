@@ -125,4 +125,23 @@ public class PlayerManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         p_collider.isTrigger = false;
     }
+
+    public void ResetPlayer()
+    {
+        GetComponent<Animator>().SetTrigger("Jump");
+
+        float __xPosition = transform.position.x;
+
+        if (__xPosition > Camera.main.transform.position.x)
+            __xPosition = Camera.main.transform.position.x - 1f;
+
+        transform.position = new Vector3(__xPosition, 2f, 0f);
+
+        gameObject.layer = LayerMask.NameToLayer("Default");
+
+        CurrentWeapon = Weapon.REGULAR;
+        PlayerDied = false;
+        PlayerDirection = new Vector2(1f, 0f);
+        ShotSpeedModificator = 1f;
+    }
 }

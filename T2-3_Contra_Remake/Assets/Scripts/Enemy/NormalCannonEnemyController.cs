@@ -46,7 +46,7 @@ public class NormalCannonEnemyController : MonoBehaviour
         {
             _active = true;
         }
-        if (_active)
+        if (_active && !PlayerManager.instance.PlayerDied)
         {
             if (life > 0)
             {
@@ -144,7 +144,11 @@ public class NormalCannonEnemyController : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
 
-            Instantiate(shot, spawnPoint.position, Quaternion.Euler(0, 0, _zAngle));
+            if (!PlayerManager.instance.PlayerDied && life > 0f)
+            {
+
+                Instantiate(shot, spawnPoint.position, Quaternion.Euler(0, 0, _zAngle));
+            }
         }
     }
 }

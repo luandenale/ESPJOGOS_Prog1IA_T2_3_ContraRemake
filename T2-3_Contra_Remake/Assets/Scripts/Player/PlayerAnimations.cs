@@ -33,10 +33,17 @@ public class PlayerAnimations : MonoBehaviour
         _playerAnim = GetComponent<Animator>();
     }
 
+    private void Start()
+    {
+        _playerAnim.SetTrigger("Jump");
+    }
+
     private void Update()
     {
         if (!PlayerManager.instance.PlayerDied)
         {
+            _triggeredDeath = false;
+
             FlipSprites();
 
             if (PlayerManager.instance.IsPlayerGettingOutOfWater)

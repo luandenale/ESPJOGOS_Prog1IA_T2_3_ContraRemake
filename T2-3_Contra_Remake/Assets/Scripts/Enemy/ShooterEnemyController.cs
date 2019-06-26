@@ -62,12 +62,11 @@ public class ShooterEnemyController : MonoBehaviour
 
     private void Update()
     {
-
         if (Vector2.Distance(transform.position, PlayerManager.instance.transform.position) < 10f)
         {
             _active = true;
         }
-        if (_active)
+        if (_active && !PlayerManager.instance.PlayerDied)
         {
             if (!hit)
             {
@@ -162,12 +161,15 @@ public class ShooterEnemyController : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
 
-            Vector3 __shotPosition = spawnPoint.position;
-            if(_direction == Vector2.right)
-                __shotPosition = new Vector3(spawnPoint.position.x + (2* Mathf.Abs(spawnPoint.localPosition.x)), spawnPoint.position.y, spawnPoint.position.z);
+            if (!PlayerManager.instance.PlayerDied && !hit)
+            {
 
+                Vector3 __shotPosition = spawnPoint.position;
+                if(_direction == Vector2.right)
+                    __shotPosition = new Vector3(spawnPoint.position.x + (2* Mathf.Abs(spawnPoint.localPosition.x)), spawnPoint.position.y, spawnPoint.position.z);
 
-            Instantiate(shot, __shotPosition, Quaternion.Euler(0, 0, _zAngle));
+                Instantiate(shot, __shotPosition, Quaternion.Euler(0, 0, _zAngle));
+            }
         }
     }
 }

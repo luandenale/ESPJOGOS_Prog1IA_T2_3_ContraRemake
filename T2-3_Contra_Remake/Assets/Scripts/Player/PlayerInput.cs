@@ -39,8 +39,10 @@ public class PlayerInput: MonoBehaviour
     {
         if (!PlayerManager.instance.PlayerDied)
         {
+            _triggeredDeath = false;
+
             // Horizontal movement
-            if(Input.GetAxis("Horizontal") != 0 && !PlayerManager.instance.IsPlayerGettingOutOfWater)
+            if (Input.GetAxis("Horizontal") != 0 && !PlayerManager.instance.IsPlayerGettingOutOfWater)
             {
                 float __walkingDelta = Input.GetAxisRaw("Horizontal") * _walkSpeed;
                 _playerRigidBody.velocity = new Vector2(__walkingDelta, _playerRigidBody.velocity.y);
