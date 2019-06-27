@@ -14,6 +14,8 @@ public enum Weapon
 
 public class PlayerManager : MonoBehaviour
 {
+    [SerializeField] Animator _flickerAnimator;
+
     public static PlayerManager instance = null;
 
     public Weapon CurrentWeapon;
@@ -48,6 +50,8 @@ public class PlayerManager : MonoBehaviour
 
         _playerRigidBody = GetComponent<Rigidbody2D>();
         PlayerDied = false;
+
+        StartCoroutine(FlickerInvulnerable());
     }
 
     private void Update()
@@ -132,16 +136,27 @@ public class PlayerManager : MonoBehaviour
 
         float __xPosition = transform.position.x;
 
-        if (__xPosition > Camera.main.transform.position.x)
+        if (__xPosition > Camera.main.transform.position.x || __xPosition < Camera.main.transform.position.x - 4f)
             __xPosition = Camera.main.transform.position.x - 1f;
 
         transform.position = new Vector3(__xPosition, 2f, 0f);
 
-        gameObject.layer = LayerMask.NameToLayer("Default");
 
         CurrentWeapon = Weapon.REGULAR;
         PlayerDied = false;
         PlayerDirection = new Vector2(1f, 0f);
         ShotSpeedModificator = 1f;
+
+        StartCoroutine(FlickerInvulnerable());
+    }
+
+    private IEnumerator FlickerInvulnerable()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Water");
+        _flickerAnimator.SetTrigger("Trigger");
+
+        yield return new WaitForSeconds(1.5f);
+
+        gameObject.layer = LayerMask.NameToLayer("Default");
     }
 }
