@@ -106,7 +106,7 @@ public class PlayerManager : MonoBehaviour
         {
             PlayerDied = true;
             AudioManager.instance.PlayDie();
-            gameObject.layer = LayerMask.NameToLayer("Enemy");
+            Physics2D.IgnoreLayerCollision(0, 8, true);
         }
 
         if (collision.gameObject.tag == "Ground" && IsPlayerTouchingWater)
@@ -119,8 +119,8 @@ public class PlayerManager : MonoBehaviour
     private IEnumerator GetOutOfWater()
     {
         _playerRigidBody.velocity = new Vector2(0f,0f);
-        yield return new WaitForSeconds(0.1f);
-        transform.position = new Vector3(transform.position.x + 0.25f, -4.16f, 0f);
+        yield return new WaitForSeconds(0.05f);
+        transform.position = new Vector3(transform.position.x + (PlayerDirection.x * 0.25f), -4.16f, 0f);
         IsPlayerGettingOutOfWater = false;
     }
 
@@ -152,11 +152,11 @@ public class PlayerManager : MonoBehaviour
 
     private IEnumerator FlickerInvulnerable()
     {
-        gameObject.layer = LayerMask.NameToLayer("Water");
+        Physics2D.IgnoreLayerCollision(0, 8, true);
         _flickerAnimator.SetTrigger("Trigger");
 
         yield return new WaitForSeconds(1.5f);
 
-        gameObject.layer = LayerMask.NameToLayer("Default");
+        Physics2D.IgnoreLayerCollision(0, 8, false);
     }
 }
