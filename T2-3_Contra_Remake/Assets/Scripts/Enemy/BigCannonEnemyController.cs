@@ -95,7 +95,7 @@ public class BigCannonEnemyController : MonoBehaviour
 
     private IEnumerator StartShooting()
     {
-        while (_active)
+        while (_active && !PlayerManager.instance.PlayerDied)
         {
             yield return new WaitForSeconds(1.5f);
 

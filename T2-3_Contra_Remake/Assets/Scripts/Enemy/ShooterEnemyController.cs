@@ -157,19 +157,22 @@ public class ShooterEnemyController : MonoBehaviour
 
     private IEnumerator StartShooting()
     {
-        while (_active)
+        while (_active && !PlayerManager.instance.PlayerDied)
         {
             yield return new WaitForSeconds(1f);
-
-            if (!PlayerManager.instance.PlayerDied && !hit)
+            for(int i=0; i<3; i++)
             {
+                if (!PlayerManager.instance.PlayerDied && !hit)
+                {
+                    Vector3 __shotPosition = spawnPoint.position;
+                    if(_direction == Vector2.right)
+                        __shotPosition = new Vector3(spawnPoint.position.x + (2* Mathf.Abs(spawnPoint.localPosition.x)), spawnPoint.position.y, spawnPoint.position.z);
 
-                Vector3 __shotPosition = spawnPoint.position;
-                if(_direction == Vector2.right)
-                    __shotPosition = new Vector3(spawnPoint.position.x + (2* Mathf.Abs(spawnPoint.localPosition.x)), spawnPoint.position.y, spawnPoint.position.z);
-
-                Instantiate(shot, __shotPosition, Quaternion.Euler(0, 0, _zAngle));
+                    Instantiate(shot, __shotPosition, Quaternion.Euler(0, 0, _zAngle));
+                }
+                yield return new WaitForSeconds(0.15f);
             }
+
         }
     }
 }

@@ -96,6 +96,11 @@ public class ShotController : MonoBehaviour
                     AudioManager.instance.PlayEnemyExplode();
                     collision.GetComponent<ShooterEnemyController>().hit = true;
                 }
+                else if (collision.GetComponent<HiddenEnemyController>() != null)
+                {
+                    AudioManager.instance.PlayEnemyExplode();
+                    collision.GetComponent<HiddenEnemyController>().hit = true;
+                }
                 else if (collision.GetComponent<NormalCannonEnemyController>() != null)
                 {
                     AudioManager.instance.PlayHitCannon();
