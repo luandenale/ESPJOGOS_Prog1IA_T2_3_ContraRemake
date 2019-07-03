@@ -132,6 +132,7 @@ public class PlayerManager : MonoBehaviour
 
     public void ResetPlayer()
     {
+        _playerRigidBody.velocity = Vector2.zero;
         GetComponent<Animator>().SetTrigger("Jump");
 
         float __xPosition = transform.position.x;

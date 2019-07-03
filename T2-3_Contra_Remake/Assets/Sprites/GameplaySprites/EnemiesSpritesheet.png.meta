@@ -69,6 +69,9 @@ TextureImporter:
     21300128: Shooter_Enemy_3
     21300130: Shooter_Enemy_4
     21300132: Shooter_Enemy_5
+    21300134: Hidden_Enemy_3
+    21300136: Hidden_Enemy_2
+    21300138: Hidden_Enemy_1
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -1519,6 +1522,66 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 64fecca3236f302459173cdb55c272d8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hidden_Enemy_3
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 239
+        width: 24
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cad372da1e7f2344aa66796c5edc5f3e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hidden_Enemy_2
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 239
+        width: 24
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7230aa9fe5ea54049a05cc5499b47bcd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hidden_Enemy_1
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 239
+        width: 24
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e622542e5c00537458a645454538d40c
       vertices: []
       indices: 
       edges: []
