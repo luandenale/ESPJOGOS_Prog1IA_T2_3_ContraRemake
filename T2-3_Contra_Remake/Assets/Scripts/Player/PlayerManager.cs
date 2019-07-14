@@ -21,6 +21,8 @@ public class PlayerManager : MonoBehaviour
     public Weapon CurrentWeapon;
     public Vector2 PlayerDirection;
 
+    public bool FinishedLevel = false;
+
     public bool PlayerJumped = false;
     public bool PlayerJumpingDown = false;
 
@@ -36,8 +38,11 @@ public class PlayerManager : MonoBehaviour
 
     public bool PlayerDied;
 
+    public bool SwitchBossLayers;
+
     private Rigidbody2D _playerRigidBody;
     private SpriteRenderer _playerSprite;
+    private bool _startedWalkingOut = false;
 
     private void Awake()
     {
@@ -65,6 +70,17 @@ public class PlayerManager : MonoBehaviour
             IsPlayerWalking = true;
         else
             IsPlayerWalking = false;
+
+        if (FinishedLevel && !_startedWalkingOut)
+        {
+            _startedWalkingOut = true;
+
+            Physics2D.IgnoreLayerCollision(0, 8, true);
+            Physics2D.IgnoreLayerCollision(0, 11, true);
+            PlayerDirection = Vector2.right;
+            IsPlayerShooting = false;
+            StartCoroutine(WalkOutOfLevel());
+        }
     }
 
     private void OnCollisionStay2D(Collision2D p_collision)
@@ -159,5 +175,22 @@ public class PlayerManager : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         Physics2D.IgnoreLayerCollision(0, 8, false);
+    }
+
+    private IEnumerator WalkOutOfLevel()
+    {
+        while (true)
+        {
+            _playerRigidBody.velocity = new Vector2(1.8f, _playerRigidBody.velocity.y);
+
+            if (transform.position.x < 70f && transform.position.x > 69.5f && IsPlayerTouchingGround)
+            {
+                _playerRigidBody.AddForce(new Vector3(0f, 5f, 0f), ForceMode2D.Impulse);
+            }
+
+            if (_playerRigidBody.velocity.y < 0 && transform.position.y <= -3.5f && transform.position.x > 69.5f)
+                SwitchBossLayers = true;
+            yield return null;
+        }
     }
 }

@@ -78,6 +78,23 @@ public class RotatingShot : MonoBehaviour
                 if (collision.GetComponent<BigCannonEnemyController>().life <= 0)
                     AudioManager.instance.PlayEnemyExplode();
             }
+            else if (collision.GetComponent<BossDoor>() != null)
+            {
+                AudioManager.instance.PlayHitCannon();
+                collision.GetComponent<BossDoor>().life -= 12.5f;
+                if (collision.GetComponent<BossDoor>().life <= 0)
+                    AudioManager.instance.PlayEnemyExplode();
+            }
+            else if (collision.GetComponent<BossCannons>() != null)
+            {
+                AudioManager.instance.PlayHitCannon();
+                collision.GetComponent<BossCannons>().life -= 12.5f;
+            }
+            else if (collision.GetComponent<BossHiddenEnemy>() != null)
+            {
+                AudioManager.instance.PlayEnemyExplode();
+                collision.GetComponent<BossHiddenEnemy>().hit = true;
+            }
         }
     }
 }

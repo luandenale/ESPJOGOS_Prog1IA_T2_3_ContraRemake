@@ -64,6 +64,12 @@
     <Compile Include="Assets\Scripts\BridgeController.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Enemy\BigCannonEnemyController.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Boss\BossBackground.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Boss\BossCannons.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Boss\BossController.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Boss\BossDoor.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Boss\BossHiddenEnemy.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Boss\BossShot.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyShotController.cs" />
     <Compile Include="Assets\Scripts\Enemy\HiddenEnemyController.cs" />
     <Compile Include="Assets\Scripts\Enemy\NormalCannonEnemyController.cs" />

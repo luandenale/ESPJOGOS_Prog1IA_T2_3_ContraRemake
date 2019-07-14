@@ -85,7 +85,8 @@ public class ShotController : MonoBehaviour
             }
             else if(collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
-                _hit = true;
+                if(collision.GetComponent<BossShot>() == null)
+                    _hit = true;
                 if (collision.GetComponent<RunnerEnemyController>() != null)
                 {
                     AudioManager.instance.PlayEnemyExplode();
@@ -114,6 +115,23 @@ public class ShotController : MonoBehaviour
                     collision.GetComponent<BigCannonEnemyController>().life -= shotDamage;
                     if(collision.GetComponent<BigCannonEnemyController>().life <= 0)
                         AudioManager.instance.PlayEnemyExplode();
+                }
+                else if (collision.GetComponent<BossDoor>() != null)
+                {
+                    AudioManager.instance.PlayHitCannon();
+                    collision.GetComponent<BossDoor>().life -= shotDamage;
+                    if (collision.GetComponent<BossDoor>().life <= 0)
+                        AudioManager.instance.PlayEnemyExplode();
+                }
+                else if (collision.GetComponent<BossCannons>() != null)
+                {
+                    AudioManager.instance.PlayHitCannon();
+                    collision.GetComponent<BossCannons>().life -= shotDamage;
+                }
+                else if (collision.GetComponent<BossHiddenEnemy>() != null)
+                {
+                    AudioManager.instance.PlayEnemyExplode();
+                    collision.GetComponent<BossHiddenEnemy>().hit = true;
                 }
             }
         }

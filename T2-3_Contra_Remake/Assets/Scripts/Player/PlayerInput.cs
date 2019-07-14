@@ -18,7 +18,7 @@ public class SpawnPointPositions
 
 public class PlayerInput: MonoBehaviour
 {
-    [Range(2f,6f)]
+    [Range(1f,6f)]
     [SerializeField] float _walkSpeed;
     [SerializeField] GameObject _shot;
     [SerializeField] Transform ShotSpawnPoint;
@@ -37,7 +37,7 @@ public class PlayerInput: MonoBehaviour
 
     private void Update()
     {
-        if (!PlayerManager.instance.PlayerDied)
+        if (!PlayerManager.instance.PlayerDied && !PlayerManager.instance.FinishedLevel)
         {
             _triggeredDeath = false;
 
@@ -103,7 +103,7 @@ public class PlayerInput: MonoBehaviour
         }
         else
         {
-            if(!_triggeredDeath)
+            if(!_triggeredDeath && PlayerManager.instance.PlayerDied)
             {
                 _triggeredDeath = true;
                 _playerRigidBody.velocity = new Vector2(0f, 0f);
