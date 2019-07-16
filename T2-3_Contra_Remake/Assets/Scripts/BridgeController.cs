@@ -23,4 +23,9 @@ public class BridgeController : MonoBehaviour
         }
     }
 
+    public void PlayExplodeBridgeSound()
+    {
+        AudioManager.instance.PlayBridgeExplode();
+    }
+
 }

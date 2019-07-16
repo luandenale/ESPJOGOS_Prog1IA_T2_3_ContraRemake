@@ -81,6 +81,7 @@ public class PlayerAnimations : MonoBehaviour
         {
             if (!_triggeredDeath)
             {
+                SetActiveSprite(0);
                 _triggeredDeath = true;
                 _playerAnim.SetTrigger("Dead");
             }

@@ -41,6 +41,7 @@ public class PlayerManager : MonoBehaviour
     public bool SwitchBossLayers;
 
     private Rigidbody2D _playerRigidBody;
+    private BoxCollider2D _collider;
     private SpriteRenderer _playerSprite;
     private bool _startedWalkingOut = false;
 
@@ -54,6 +55,7 @@ public class PlayerManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         _playerRigidBody = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<BoxCollider2D>();
         PlayerDied = false;
 
         StartCoroutine(FlickerInvulnerable());
@@ -121,6 +123,7 @@ public class PlayerManager : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             PlayerDied = true;
+            _collider.enabled = false;
             AudioManager.instance.PlayDie();
             Physics2D.IgnoreLayerCollision(0, 8, true);
         }
@@ -148,6 +151,7 @@ public class PlayerManager : MonoBehaviour
 
     public void ResetPlayer()
     {
+        _collider.enabled = true;
         _playerRigidBody.velocity = Vector2.zero;
         GetComponent<Animator>().SetTrigger("Jump");
 
@@ -160,6 +164,7 @@ public class PlayerManager : MonoBehaviour
 
 
         CurrentWeapon = Weapon.REGULAR;
+        IsPlayerTouchingWater = false;
         PlayerDied = false;
         PlayerDirection = new Vector2(1f, 0f);
         ShotSpeedModificator = 1f;

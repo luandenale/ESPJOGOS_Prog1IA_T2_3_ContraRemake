@@ -39,6 +39,7 @@ public class ShooterEnemyController : MonoBehaviour
     private void OnBecameInvisible()
     {
         _visible = false;
+        _active = false;
     }
 
     private void OnBecameVisible()
@@ -62,7 +63,7 @@ public class ShooterEnemyController : MonoBehaviour
 
     private void Update()
     {
-        if (Vector2.Distance(transform.position, PlayerManager.instance.transform.position) < 10f)
+        if ( _visible)
         {
             _active = true;
         }
@@ -136,12 +137,12 @@ public class ShooterEnemyController : MonoBehaviour
                     StartCoroutine(StartShooting());
                 }
             }
-            else if(!_destroyed)
-            {
-                _destroyed = true;
-                _active = false;
-                StartCoroutine(DeathAnimation());
-            }
+        }
+        if (!_destroyed && hit)
+        {
+            _destroyed = true;
+            _active = false;
+            StartCoroutine(DeathAnimation());
         }
 
     }
@@ -157,22 +158,25 @@ public class ShooterEnemyController : MonoBehaviour
 
     private IEnumerator StartShooting()
     {
-        while (_active && !PlayerManager.instance.PlayerDied)
+        while (_active)
         {
-            yield return new WaitForSeconds(1f);
-            for(int i=0; i<3; i++)
+            if (!PlayerManager.instance.PlayerDied)
             {
-                if (!PlayerManager.instance.PlayerDied && !hit)
+                yield return new WaitForSeconds(1f);
+                for(int i=0; i<3; i++)
                 {
-                    Vector3 __shotPosition = spawnPoint.position;
-                    if(_direction == Vector2.right)
-                        __shotPosition = new Vector3(spawnPoint.position.x + (2* Mathf.Abs(spawnPoint.localPosition.x)), spawnPoint.position.y, spawnPoint.position.z);
+                    if (!PlayerManager.instance.PlayerDied && !hit)
+                    {
+                        Vector3 __shotPosition = spawnPoint.position;
+                        if(_direction == Vector2.right)
+                            __shotPosition = new Vector3(spawnPoint.position.x + (2* Mathf.Abs(spawnPoint.localPosition.x)), spawnPoint.position.y, spawnPoint.position.z);
 
-                    Instantiate(shot, __shotPosition, Quaternion.Euler(0, 0, _zAngle));
+                        Instantiate(shot, __shotPosition, Quaternion.Euler(0, 0, _zAngle));
+                    }
+                    yield return new WaitForSeconds(0.3f);
                 }
-                yield return new WaitForSeconds(0.15f);
             }
-
+            yield return null;
         }
     }
 }

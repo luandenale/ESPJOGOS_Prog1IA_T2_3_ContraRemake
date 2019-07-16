@@ -19,7 +19,6 @@ public class HiddenEnemyController : MonoBehaviour
     private float _zAngle;
 
     public bool hit;
-    public bool shoot;
 
     private void Start()
     {
@@ -64,7 +63,7 @@ public class HiddenEnemyController : MonoBehaviour
 
     private void Update()
     {
-        if (Vector2.Distance(transform.position, PlayerManager.instance.transform.position) < 10f)
+        if (_visible)
         {
             _active = true;
         }else
@@ -86,17 +85,16 @@ public class HiddenEnemyController : MonoBehaviour
                 if (!_startedShooting)
                 {
                     _startedShooting = true;
-                    StartCoroutine(StartShooting());
+                    _animator.SetTrigger("Shooting");
                 }
             }
-            else if (!_destroyed)
-            {
-                _destroyed = true;
-                _active = false;
-                StartCoroutine(DeathAnimation());
-            }
         }
-
+        if (!_destroyed && hit)
+        {
+            _destroyed = true;
+            _active = false;
+            StartCoroutine(DeathAnimation());
+        }
     }
 
     private IEnumerator DeathAnimation()
@@ -109,21 +107,12 @@ public class HiddenEnemyController : MonoBehaviour
         Destroy(gameObject, 0.6f);
     }
 
-    private IEnumerator StartShooting()
+    public void Shoot()
     {
-        _animator.SetTrigger("Shooting");
-        while (_active && !PlayerManager.instance.PlayerDied)
-        {
-            if (shoot)
-            {
-                shoot = false;
-                Vector3 __shotPosition = spawnPoint.position;
-                if (_direction == Vector2.right)
-                    __shotPosition = new Vector3(spawnPoint.position.x + 1.15f, spawnPoint.position.y, spawnPoint.position.z);
+        Vector3 __shotPosition = spawnPoint.position;
+        if (_direction == Vector2.right)
+            __shotPosition = new Vector3(spawnPoint.position.x + 1.15f, spawnPoint.position.y, spawnPoint.position.z);
 
-                Instantiate(shot, __shotPosition, Quaternion.Euler(0, 0, _zAngle));
-            }
-            yield return null;
-        }
+        Instantiate(shot, __shotPosition, Quaternion.Euler(0, 0, _zAngle));
     }
 }

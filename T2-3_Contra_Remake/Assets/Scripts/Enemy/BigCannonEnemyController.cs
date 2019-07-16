@@ -14,7 +14,6 @@ public class BigCannonEnemyController : MonoBehaviour
     private bool _startedShooting;
     private float _zAngle;
 
-
     public float life;
 
     private void Start()
@@ -32,6 +31,7 @@ public class BigCannonEnemyController : MonoBehaviour
     private void OnBecameInvisible()
     {
         _visible = false;
+        _active = false;
     }
 
     private void OnBecameVisible()
@@ -42,7 +42,7 @@ public class BigCannonEnemyController : MonoBehaviour
     private void Update()
     {
 
-        if (Vector2.Distance(transform.position, PlayerManager.instance.transform.position) < 10f)
+        if (_visible)
         {
             _active = true;
         }
@@ -62,18 +62,27 @@ public class BigCannonEnemyController : MonoBehaviour
 
                 if (__angleInDegrees >= 105f && __angleInDegrees <= 135f)
                 {
-                    _cannonAnimator.SetTrigger("DiagUp");
-                    _zAngle = 30f;
+                    if(_zAngle != 30f)
+                    {
+                        _cannonAnimator.SetTrigger("DiagUp");
+                        _zAngle = 30f;
+                    }
                 }
                 else if (__angleInDegrees >= 135f && __angleInDegrees <= 165f)
                 {
-                    _cannonAnimator.SetTrigger("DiagStraight");
-                    _zAngle = 60f;
+                    if (_zAngle != 60f)
+                    {
+                        _cannonAnimator.SetTrigger("DiagStraight");
+                        _zAngle = 60f;
+                    }
                 }
                 else if ((__angleInDegrees >= 165f && __angleInDegrees <= 180f) || (__angleInDegrees >= -180f && __angleInDegrees <= -165f))
                 {
-                    _cannonAnimator.SetTrigger("Straight");
-                    _zAngle = 90f;
+                    if (_zAngle != 90f)
+                    {
+                        _cannonAnimator.SetTrigger("Straight");
+                        _zAngle = 90f;
+                    }
                 }
                 if (!_startedShooting)
                 {
@@ -85,6 +94,7 @@ public class BigCannonEnemyController : MonoBehaviour
             else
             {
                 _active = false;
+                _cannonAnimator.SetBool("Unlocked", false);
                 _cannonAnimator.SetTrigger("Explode");
                 _cannonCollider.enabled = false;
                 Destroy(gameObject, 1.1f);
@@ -95,7 +105,7 @@ public class BigCannonEnemyController : MonoBehaviour
 
     private IEnumerator StartShooting()
     {
-        while (_active && !PlayerManager.instance.PlayerDied)
+        while (_active)
         {
             yield return new WaitForSeconds(1.5f);
 
@@ -108,5 +118,10 @@ public class BigCannonEnemyController : MonoBehaviour
                 Instantiate(shot, spawnPoint.position, Quaternion.Euler(0, 0, _zAngle));
             }
         }
+    }
+
+    public void SetUnlocked()
+    {
+        _cannonAnimator.SetBool("Unlocked", true);
     }
 }

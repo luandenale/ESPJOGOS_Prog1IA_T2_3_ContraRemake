@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyShotController : MonoBehaviour
 {
-    public float shotSpeed = 5f;
+    public float shotSpeed = 3f;
     public string shotType;
 
     private SpriteRenderer[] _shotsSprites;

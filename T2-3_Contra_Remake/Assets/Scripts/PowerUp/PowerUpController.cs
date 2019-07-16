@@ -14,14 +14,21 @@ public class PowerUpController : MonoBehaviour
     private bool _autoDestroy;
     private Animator _powerUpAnimator;
     private Rigidbody2D _powerUpRigidbody;
+    private SpriteRenderer _sprite;
+    private BoxCollider2D _collider;
+
+    private bool _active;
 
     private void Awake()
     {
+        _active = false;
         _yInitialPos = transform.position.y;
         _capsuleDestroyed = false;
         _autoDestroy = false;
         _powerUpAnimator = GetComponent<Animator>();
         _powerUpRigidbody = GetComponent<Rigidbody2D>();
+        _sprite = GetComponent<SpriteRenderer>();
+        _collider = GetComponent<BoxCollider2D>();
     }
 
     private void Start()
@@ -29,14 +36,30 @@ public class PowerUpController : MonoBehaviour
         StartCoroutine(UpDownRoutine());
     }
 
+    public void OnBecameInvisible()
+    {
+        if (_active)
+            Destroy(gameObject);
+    }
+
     private void Update()
     {
         if (_autoDestroy)
             DestroyImmediate(gameObject);
-        if (!_capsuleDestroyed)
+        else
         {
-            transform.Translate(new Vector2(shotDirection.x,0f) * shotSpeed * Time.deltaTime);
-            transform.Translate(new Vector2(0f, shotDirection.y) * (shotSpeed/3) * Time.deltaTime);
+            if (Camera.main.transform.position.x > (transform.position.x + 7f) && !_active)
+            {
+                _active = true;
+                _sprite.enabled = true;
+                _collider.enabled = true;
+            }
+
+            if (!_capsuleDestroyed && _active)
+            {
+                transform.Translate(new Vector2(shotDirection.x,0f) * shotSpeed * Time.deltaTime);
+                transform.Translate(new Vector2(0f, shotDirection.y) * (shotSpeed/3) * Time.deltaTime);
+            }
         }
     }
 
@@ -66,6 +89,7 @@ public class PowerUpController : MonoBehaviour
         if (!_capsuleDestroyed)
         {
             _capsuleDestroyed = true;
+            gameObject.layer = LayerMask.NameToLayer("BoundaryCollider");
 
             if (p_upForce == 4f)
                 _powerUpAnimator.SetTrigger("Hit");
@@ -78,18 +102,21 @@ public class PowerUpController : MonoBehaviour
 
             _powerUpRigidbody.velocity = new Vector2(0f, 0f);
 
-            _powerUpRigidbody.AddForce(new Vector2(1f, 0f), ForceMode2D.Impulse);
+            _powerUpRigidbody.AddForce(new Vector2(1.5f, 0f), ForceMode2D.Impulse);
             _powerUpRigidbody.AddForce(new Vector2(0f, p_upForce), ForceMode2D.Impulse);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player"  && _capsuleDestroyed)
         {
             AudioManager.instance.PlayPowerUpPick();
             if (PowerUpType != Weapon.RAPID)
+            {
                 collision.gameObject.GetComponent<PlayerManager>().CurrentWeapon = PowerUpType;
+                collision.gameObject.GetComponent<PlayerManager>().ShotSpeedModificator = 1f;
+            }
             else
                 collision.gameObject.GetComponent<PlayerManager>().ShotSpeedModificator = 1.5f;
             _autoDestroy = true;

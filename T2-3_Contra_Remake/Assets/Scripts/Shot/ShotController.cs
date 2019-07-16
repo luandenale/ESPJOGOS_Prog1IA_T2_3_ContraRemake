@@ -72,7 +72,7 @@ public class ShotController : MonoBehaviour
             {
                 _hit = true;
                 AudioManager.instance.PlayPowerUpExplode();
-                collision.GetComponent<PowerUpController>().DropPowerUp(4f);
+                collision.GetComponent<PowerUpController>().DropPowerUp(6f);
             }
             else if(collision.tag == "StaticPowerUp")
             {
