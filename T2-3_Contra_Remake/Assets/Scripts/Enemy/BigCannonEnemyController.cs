@@ -112,9 +112,9 @@ public class BigCannonEnemyController : MonoBehaviour
             if (!PlayerManager.instance.PlayerDied && life > 0f)
             {
                 Instantiate(shot, spawnPoint.position, Quaternion.Euler(0, 0, _zAngle));
-                yield return new WaitForSeconds(0.15f);
+                yield return new WaitForSeconds(0.2f);
                 Instantiate(shot, spawnPoint.position, Quaternion.Euler(0, 0, _zAngle));
-                yield return new WaitForSeconds(0.15f);
+                yield return new WaitForSeconds(0.2f);
                 Instantiate(shot, spawnPoint.position, Quaternion.Euler(0, 0, _zAngle));
             }
         }

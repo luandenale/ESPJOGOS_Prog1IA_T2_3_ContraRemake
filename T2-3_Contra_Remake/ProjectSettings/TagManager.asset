@@ -8,6 +8,7 @@ TagManager:
   - PowerUp
   - StaticPowerUp
   - Water
+  - RunnerFeet
   layers:
   - Default
   - TransparentFX

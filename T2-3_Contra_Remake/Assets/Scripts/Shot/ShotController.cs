@@ -85,7 +85,7 @@ public class ShotController : MonoBehaviour
             }
             else if(collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
-                if(collision.GetComponent<BossShot>() == null)
+                if(collision.GetComponent<BossShot>() == null || collision.tag != "RunnerFeet")
                     _hit = true;
                 if (collision.GetComponent<RunnerEnemyController>() != null)
                 {

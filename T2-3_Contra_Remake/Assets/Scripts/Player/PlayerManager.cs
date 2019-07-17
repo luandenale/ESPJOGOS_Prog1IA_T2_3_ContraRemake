@@ -102,12 +102,8 @@ public class PlayerManager : MonoBehaviour
             // Check to jump down through
             if (PlayerJumpingDown)
             {
-                BoxCollider2D __platformCollider = p_collision.gameObject.GetComponent<BoxCollider2D>();
-
                 PlayerJumpingDown = false;
-                __platformCollider.isTrigger = true;
-                _playerRigidBody.AddForce(new Vector3(0f, -1f, 0f), ForceMode2D.Impulse);
-                StartCoroutine(DisableGroundPeriodically(__platformCollider));
+                StartCoroutine(JumpDownPeriodically());
             }
         }
         else if (p_collision.gameObject.tag == "Water")
@@ -143,10 +139,12 @@ public class PlayerManager : MonoBehaviour
         IsPlayerGettingOutOfWater = false;
     }
 
-    private IEnumerator DisableGroundPeriodically(BoxCollider2D p_collider)
+    private IEnumerator JumpDownPeriodically()
     {
-        yield return new WaitForSeconds(0.5f);
-        p_collider.isTrigger = false;
+        _collider.isTrigger = true;
+        _playerRigidBody.AddForce(new Vector3(0f, -1f, 0f), ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.4f);
+        _collider.isTrigger = false;
     }
 
     public void ResetPlayer()

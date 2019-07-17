@@ -159,7 +159,7 @@ public class NormalCannonEnemyController : MonoBehaviour
                     StartCoroutine(StartShooting());
                 }
             }
-            else
+            else if(_active)
             {
                 _active = false;
                 _normalCannonAnimator.SetBool("UnlockFinished", false);
@@ -175,7 +175,7 @@ public class NormalCannonEnemyController : MonoBehaviour
     {
         while (_active)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.5f);
 
             if (!PlayerManager.instance.PlayerDied && life > 0f)
             {

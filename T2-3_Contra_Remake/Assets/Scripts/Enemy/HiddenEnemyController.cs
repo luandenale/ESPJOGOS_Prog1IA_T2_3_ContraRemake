@@ -51,13 +51,13 @@ public class HiddenEnemyController : MonoBehaviour
         {
             _zAngle = 90f;
             _sprite.flipX = false;
-            _collider.offset = new Vector2(-0.23f, -0.15f);
+            _collider.offset = new Vector2(-0.23f, 0.345f);
         }
         else
         {
             _zAngle = -90f;
             _sprite.flipX = true;
-            _collider.offset = new Vector2(0.23f, -0.15f);
+            _collider.offset = new Vector2(0.23f, 0.345f);
         }
     }
 

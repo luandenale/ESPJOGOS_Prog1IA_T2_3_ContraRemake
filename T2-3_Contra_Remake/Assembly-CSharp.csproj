@@ -74,6 +74,8 @@
     <Compile Include="Assets\Scripts\Enemy\HiddenEnemyController.cs" />
     <Compile Include="Assets\Scripts\Enemy\NormalCannonEnemyController.cs" />
     <Compile Include="Assets\Scripts\Enemy\RunnerEnemyController.cs" />
+    <Compile Include="Assets\Scripts\Enemy\RunnerEnemyFeet.cs" />
+    <Compile Include="Assets\Scripts\Enemy\RunnerEnemySpawner.cs" />
     <Compile Include="Assets\Scripts\Enemy\ShooterEnemyController.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnimations.cs" />

@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7442763771595628556}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.45, y: 0.15, z: 0}
+  m_LocalPosition: {x: -0.7, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7442763772024180984}
@@ -121,7 +121,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7442763772024180983}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -195,4 +195,3 @@ MonoBehaviour:
   shot: {fileID: 136399378426383765, guid: e30351647f126974b811aac61b8d2469, type: 3}
   spawnPoint: {fileID: 7442763771595628557}
   hit: 0
-  shoot: 0
