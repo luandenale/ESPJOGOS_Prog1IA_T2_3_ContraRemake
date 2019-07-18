@@ -85,53 +85,77 @@ public class ShotController : MonoBehaviour
             }
             else if(collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
-                if(collision.GetComponent<BossShot>() == null || collision.tag != "RunnerFeet")
+                if(collision.GetComponent<BossShot>() == null && collision.tag != "RunnerFeet")
                     _hit = true;
                 if (collision.GetComponent<RunnerEnemyController>() != null)
                 {
-                    AudioManager.instance.PlayEnemyExplode();
-                    collision.GetComponent<RunnerEnemyController>().hit = true;
+                    if (!collision.GetComponent<RunnerEnemyController>().hit)
+                    {
+                        AudioManager.instance.PlayEnemyExplode();
+                        collision.GetComponent<RunnerEnemyController>().hit = true;
+                    }
                 }
                 else if (collision.GetComponent<ShooterEnemyController>() != null)
                 {
-                    AudioManager.instance.PlayEnemyExplode();
-                    collision.GetComponent<ShooterEnemyController>().hit = true;
+                    if (!collision.GetComponent<ShooterEnemyController>().hit)
+                    {
+                        AudioManager.instance.PlayEnemyExplode();
+                        collision.GetComponent<ShooterEnemyController>().hit = true;
+                    }
                 }
                 else if (collision.GetComponent<HiddenEnemyController>() != null)
                 {
-                    AudioManager.instance.PlayEnemyExplode();
-                    collision.GetComponent<HiddenEnemyController>().hit = true;
+                    if (!collision.GetComponent<HiddenEnemyController>().hit)
+                    {
+                        AudioManager.instance.PlayEnemyExplode();
+                        collision.GetComponent<HiddenEnemyController>().hit = true;
+                    }
                 }
                 else if (collision.GetComponent<NormalCannonEnemyController>() != null)
                 {
-                    AudioManager.instance.PlayHitCannon();
-                    collision.GetComponent<NormalCannonEnemyController>().life -= shotDamage;
-                    if (collision.GetComponent<NormalCannonEnemyController>().life <= 0)
-                        AudioManager.instance.PlayEnemyExplode();
+                    if (collision.GetComponent<NormalCannonEnemyController>().life > 0)
+                    {
+                        AudioManager.instance.PlayHitCannon();
+                        collision.GetComponent<NormalCannonEnemyController>().life -= shotDamage;
+                        if (collision.GetComponent<NormalCannonEnemyController>().life <= 0)
+                            AudioManager.instance.PlayEnemyExplode();
+                    }
                 }
                 else if (collision.GetComponent<BigCannonEnemyController>() != null)
                 {
-                    AudioManager.instance.PlayHitCannon();
-                    collision.GetComponent<BigCannonEnemyController>().life -= shotDamage;
-                    if(collision.GetComponent<BigCannonEnemyController>().life <= 0)
-                        AudioManager.instance.PlayEnemyExplode();
+                    if(collision.GetComponent<BigCannonEnemyController>().life > 0)
+                    {
+                        AudioManager.instance.PlayHitCannon();
+                        collision.GetComponent<BigCannonEnemyController>().life -= shotDamage;
+                        if(collision.GetComponent<BigCannonEnemyController>().life <= 0)
+                            AudioManager.instance.PlayEnemyExplode();
+                    }
                 }
                 else if (collision.GetComponent<BossDoor>() != null)
                 {
-                    AudioManager.instance.PlayHitCannon();
-                    collision.GetComponent<BossDoor>().life -= shotDamage;
-                    if (collision.GetComponent<BossDoor>().life <= 0)
-                        AudioManager.instance.PlayEnemyExplode();
+                    if (collision.GetComponent<BossDoor>().life > 0)
+                    {
+                        AudioManager.instance.PlayHitCannon();
+                        collision.GetComponent<BossDoor>().life -= shotDamage;
+                        if (collision.GetComponent<BossDoor>().life <= 0)
+                            AudioManager.instance.PlayEnemyExplode();
+                    }
                 }
                 else if (collision.GetComponent<BossCannons>() != null)
                 {
-                    AudioManager.instance.PlayHitCannon();
-                    collision.GetComponent<BossCannons>().life -= shotDamage;
+                    if (collision.GetComponent<BossCannons>().life > 0)
+                    {
+                        AudioManager.instance.PlayHitCannon();
+                        collision.GetComponent<BossCannons>().life -= shotDamage;
+                    }
                 }
                 else if (collision.GetComponent<BossHiddenEnemy>() != null)
                 {
-                    AudioManager.instance.PlayEnemyExplode();
-                    collision.GetComponent<BossHiddenEnemy>().hit = true;
+                    if (!collision.GetComponent<BossHiddenEnemy>().hit)
+                    {
+                        AudioManager.instance.PlayEnemyExplode();
+                        collision.GetComponent<BossHiddenEnemy>().hit = true;
+                    }
                 }
             }
         }

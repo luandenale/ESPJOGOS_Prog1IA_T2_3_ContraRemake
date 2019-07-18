@@ -63,37 +63,41 @@ public class HiddenEnemyController : MonoBehaviour
 
     private void Update()
     {
-        if (_visible)
+        if (PlayerManager.instance != null)
         {
-            _active = true;
-        }else
-            _active = false;
-        if (_active && !PlayerManager.instance.PlayerDied)
-        {
-            if (!hit)
+            if (_visible)
             {
-                Vector3 __playerPosition = new Vector3(PlayerManager.instance.transform.position.x, PlayerManager.instance.transform.position.y + 0.75f);
-                Vector2 __difference = __playerPosition - transform.position;
-
-                Flip();
-
-                if (PlayerManager.instance.transform.position.x > transform.position.x)
-                    _direction = Vector2.right;
-                else
-                    _direction = Vector2.left;
-
-                if (!_startedShooting)
+                _active = true;
+            }
+            else
+                _active = false;
+            if (_active && !PlayerManager.instance.PlayerDied)
+            {
+                if (!hit)
                 {
-                    _startedShooting = true;
-                    _animator.SetTrigger("Shooting");
+                    Vector3 __playerPosition = new Vector3(PlayerManager.instance.transform.position.x, PlayerManager.instance.transform.position.y + 0.75f);
+                    Vector2 __difference = __playerPosition - transform.position;
+
+                    Flip();
+
+                    if (PlayerManager.instance.transform.position.x > transform.position.x)
+                        _direction = Vector2.right;
+                    else
+                        _direction = Vector2.left;
+
+                    if (!_startedShooting)
+                    {
+                        _startedShooting = true;
+                        _animator.SetTrigger("Shooting");
+                    }
                 }
             }
-        }
-        if (!_destroyed && hit)
-        {
-            _destroyed = true;
-            _active = false;
-            StartCoroutine(DeathAnimation());
+            if (!_destroyed && hit)
+            {
+                _destroyed = true;
+                _active = false;
+                StartCoroutine(DeathAnimation());
+            }
         }
     }
 
@@ -113,6 +117,7 @@ public class HiddenEnemyController : MonoBehaviour
         if (_direction == Vector2.right)
             __shotPosition = new Vector3(spawnPoint.position.x + 1.15f, spawnPoint.position.y, spawnPoint.position.z);
 
-        Instantiate(shot, __shotPosition, Quaternion.Euler(0, 0, _zAngle));
+        if(_active)
+            Instantiate(shot, __shotPosition, Quaternion.Euler(0, 0, _zAngle));
     }
 }

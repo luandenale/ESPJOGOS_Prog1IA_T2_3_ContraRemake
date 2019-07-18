@@ -28,25 +28,29 @@ public class BossController : MonoBehaviour
             _levelEnded = true;
             _bossCannons.life = 0;
             _bossBackground.selfDestruct = true;
+            _bossHiddenEnemy.hit = true;
             StartCoroutine(FinishedLevel());
+            AudioManager.instance.StopMainMusic();
             AudioManager.instance.PlayBossExplode();
         }
-
-        if (!_startBoss)
+        if (PlayerManager.instance != null)
         {
-            if(PlayerManager.instance.transform.position.x > 62f)
+            if (!_startBoss)
             {
-                _startBoss = true;
-                StartCoroutine(InitiateBoss());
-                AudioManager.instance.PlayBossInitialSound();
+                if (PlayerManager.instance.transform.position.x > 62f)
+                {
+                    _startBoss = true;
+                    StartCoroutine(InitiateBoss());
+                    AudioManager.instance.PlayBossInitialSound();
+                }
             }
-        }
 
-        if (PlayerManager.instance.SwitchBossLayers)
-        {
-            _bossBackground.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Shot";
-            _bossCannons.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Shot";
-            _bossDoor.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Shot";
+            if (PlayerManager.instance.SwitchBossLayers)
+            {
+                _bossBackground.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Shot";
+                _bossCannons.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Shot";
+                _bossDoor.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Shot";
+            }
         }
     }
 
@@ -63,7 +67,8 @@ public class BossController : MonoBehaviour
 
     private IEnumerator FinishedLevel()
     {
-        yield return new WaitForSeconds(1.2f);
+        while (AudioManager.instance.IsSFXPlaying()) yield return null;
         PlayerManager.instance.FinishedLevel = true;
+        AudioManager.instance.StageClear();
     }
 }

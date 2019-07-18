@@ -45,7 +45,8 @@ public class EnemyShotController : MonoBehaviour
         if (collision.tag == "Player")
         {
             _hit = true;
-            PlayerManager.instance.PlayerDied = true;
+            if(!PlayerManager.instance.GODMODE)
+                PlayerManager.instance.PlayerDied = true;
         }
     }
 }

@@ -34,34 +34,38 @@ public class BossHiddenEnemy : MonoBehaviour
 
     private void Update()
     {
-        if (!PlayerManager.instance.PlayerDied && active)
+        if(PlayerManager.instance != null)
         {
-            _animator.SetTrigger("Start");
-            if (!hit)
+            if (!PlayerManager.instance.PlayerDied && active)
             {
-                Vector3 __playerPosition = new Vector3(PlayerManager.instance.transform.position.x, PlayerManager.instance.transform.position.y + 0.75f);
-                Vector2 __difference = __playerPosition - transform.position;
-                float __angle = Mathf.Atan2(__difference.y, __difference.x);
-                float __angleInDegrees = __angle * Mathf.Rad2Deg;
+                _animator.SetTrigger("Start");
+                if (!hit)
+                {
+                    Vector3 __playerPosition = new Vector3(PlayerManager.instance.transform.position.x, PlayerManager.instance.transform.position.y + 0.75f);
+                    Vector2 __difference = __playerPosition - transform.position;
+                    float __angle = Mathf.Atan2(__difference.y, __difference.x);
+                    float __angleInDegrees = __angle * Mathf.Rad2Deg;
 
-                if (__angleInDegrees <= -170f && __angleInDegrees >= -180f)
-                {
-                     _zAngle = 100f;
+                    if (__angleInDegrees <= -170f && __angleInDegrees >= -180f)
+                    {
+                         _zAngle = 100f;
+                    }
+                    else if (__angleInDegrees <= -160f && __angleInDegrees >= -170f)
+                    {
+                        _zAngle = 115f;
+                    }
+                    else if (__angleInDegrees <= -140f && __angleInDegrees >= -160f)
+                    {
+                        _zAngle = 130f;
+                    }
                 }
-                else if (__angleInDegrees <= -160f && __angleInDegrees >= -170f)
+                else if (!_destroyed)
                 {
-                    _zAngle = 115f;
-                }
-                else if (__angleInDegrees <= -140f && __angleInDegrees >= -160f)
-                {
-                    _zAngle = 130f;
+                    _destroyed = true;
+                    StartCoroutine(DeathAnimation());
                 }
             }
-            else if (!_destroyed)
-            {
-                _destroyed = true;
-                StartCoroutine(DeathAnimation());
-            }
+
         }
     }
 

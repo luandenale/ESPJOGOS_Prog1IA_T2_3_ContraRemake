@@ -5,33 +5,57 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject[] _UILives;
+    [SerializeField] RectTransform _slidingImage;
+    [SerializeField] GameObject _player;
+    [SerializeField] GameObject _godModeText;
 
+    private bool _playerInstantiated;
     private bool _triggeredRestart;
     private int _extraLives;
 
     private void Start()
     {
+        _playerInstantiated = false;
         _triggeredRestart = false;
         _extraLives = 2;
+
+        StartCoroutine(SlideIntro());
     }
 
     private void Update()
     {
-        if (PlayerManager.instance.PlayerDied && !_triggeredRestart )
+        if (_playerInstantiated)
         {
-            if(_extraLives > 0)
+            if (Input.GetKeyDown(KeyCode.G))
             {
-                _triggeredRestart = true;
-
-                _UILives[_extraLives].active = false;
-
-                _extraLives--;
-
-                StartCoroutine(ResetPlayer());
+                if (!PlayerManager.instance.GODMODE)
+                {
+                    PlayerManager.instance.GODMODE = true;
+                    _godModeText.SetActive(true);
+                }
+                else
+                {
+                    PlayerManager.instance.GODMODE = false;
+                    _godModeText.SetActive(false);
+                }
             }
-            else
+
+            if (PlayerManager.instance.PlayerDied && !_triggeredRestart )
             {
-                _UILives[_extraLives].active = true;
+                if(_extraLives > 0)
+                {
+                    _triggeredRestart = true;
+
+                    _UILives[_extraLives].active = false;
+
+                    _extraLives--;
+
+                    StartCoroutine(ResetPlayer());
+                }
+                else
+                {
+                    _UILives[_extraLives].active = true;
+                }
             }
         }
 
@@ -43,6 +67,20 @@ public class GameManager : MonoBehaviour
             else
                 Time.timeScale = 1f;
         }
+    }
+
+    private IEnumerator SlideIntro()
+    {
+        while(_slidingImage.localScale.x > 0)
+        {
+            _slidingImage.localScale = new Vector3(_slidingImage.localScale.x - 0.025f, 1f, 1f);
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        _player.SetActive(true);
+        _playerInstantiated = true;
+
+        yield return null;
     }
 
     private IEnumerator ResetPlayer()

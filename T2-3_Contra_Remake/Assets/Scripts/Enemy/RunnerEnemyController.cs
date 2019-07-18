@@ -38,41 +38,44 @@ public class RunnerEnemyController : MonoBehaviour
 
     private void Update()
     {
-        if ((PlayerManager.instance.transform.position.x > playerXPosTrigger && !_destroyed) || triggeredBySpawner)
-            _active = true;
+        if (PlayerManager.instance != null)
+        {
+            if ((PlayerManager.instance.transform.position.x > playerXPosTrigger && !_destroyed) || triggeredBySpawner)
+                _active = true;
 
-        if (!hit)
-        {
-            if(_active)
-                transform.Translate(new Vector2(-2.5f, 0f) * Time.deltaTime);
-        }
-        else
-        {
-            if (!_destroyed)
+            if (!hit)
             {
-                _destroyed = true;
-                _active = false;
-                _rigidbody2D.AddForce(new Vector2(0f, 5.5f), ForceMode2D.Impulse);
-                _collider2D.enabled = false;
-
-                _animator.SetBool("Jump", true);
-                _animator.SetBool("Die", true);
-
-                Destroy(gameObject, 1.5f);
+                if (_active)
+                    transform.Translate(new Vector2(-2.5f, 0f) * Time.deltaTime);
             }
             else
             {
-                if (_rigidbody2D.velocity.y <= 0)
-                    _rigidbody2D.bodyType = RigidbodyType2D.Static;
+                if (!_destroyed)
+                {
+                    _destroyed = true;
+                    _active = false;
+                    _rigidbody2D.AddForce(new Vector2(0f, 5.5f), ForceMode2D.Impulse);
+                    _collider2D.enabled = false;
+
+                    _animator.SetBool("Jump", true);
+                    _animator.SetBool("Die", true);
+
+                    Destroy(gameObject, 1.5f);
+                }
+                else
+                {
+                    if (_rigidbody2D.velocity.y <= 0)
+                        _rigidbody2D.bodyType = RigidbodyType2D.Static;
+                }
             }
         }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground" && !feet.IsTouchingGround && !_destroyed)
+        if (collision.gameObject.tag == "Ground" && !feet.IsTouchingGround && !_destroyed && _rigidbody2D.velocity.y == 0)
         {
-            _rigidbody2D.AddForce(new Vector2(0f, 2f), ForceMode2D.Impulse);
+            _rigidbody2D.AddForce(new Vector2(0f, 4f), ForceMode2D.Impulse);
             _animator.SetBool("Jump", true);
         }else
             _animator.SetBool("Jump", false);

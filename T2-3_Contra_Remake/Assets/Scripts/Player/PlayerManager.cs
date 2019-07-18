@@ -45,6 +45,8 @@ public class PlayerManager : MonoBehaviour
     private SpriteRenderer _playerSprite;
     private bool _startedWalkingOut = false;
 
+    public bool GODMODE = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -63,6 +65,11 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
+        if(GODMODE)
+            Physics2D.IgnoreLayerCollision(0, 8, true);
+        else
+            Physics2D.IgnoreLayerCollision(0, 8, false);
+
         if (_playerRigidBody.velocity.y != 0)
         {
             IsPlayerTouchingGround = false;
@@ -118,10 +125,14 @@ public class PlayerManager : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            PlayerDied = true;
-            _collider.enabled = false;
-            AudioManager.instance.PlayDie();
-            Physics2D.IgnoreLayerCollision(0, 8, true);
+            if (!GODMODE)
+            {
+                PlayerDied = true;
+                _collider.enabled = false;
+                AudioManager.instance.PlayDie();
+                Physics2D.IgnoreLayerCollision(0, 8, true);
+
+            }
         }
 
         if (collision.gameObject.tag == "Ground" && IsPlayerTouchingWater)

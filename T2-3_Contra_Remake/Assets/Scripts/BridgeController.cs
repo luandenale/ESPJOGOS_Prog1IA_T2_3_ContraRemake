@@ -16,10 +16,13 @@ public class BridgeController : MonoBehaviour
 
     private void Update()
     {
-        if(PlayerManager.instance.transform.position.x > playerXPosTrigger)
+        if (PlayerManager.instance != null)
         {
-            _bridgeAnimator.SetTrigger("Destroy");
-            explosionsAnimator.SetTrigger("Explode");
+            if (PlayerManager.instance.transform.position.x > playerXPosTrigger)
+            {
+                _bridgeAnimator.SetTrigger("Destroy");
+                explosionsAnimator.SetTrigger("Explode");
+            }
         }
     }
 

@@ -88,10 +88,11 @@ public class PowerUpController : MonoBehaviour
     {
         if (!_capsuleDestroyed)
         {
+            AudioManager.instance.PlayEnemyExplode();
             _capsuleDestroyed = true;
             gameObject.layer = LayerMask.NameToLayer("BoundaryCollider");
 
-            if (p_upForce == 4f)
+            if (p_upForce == 6f)
                 _powerUpAnimator.SetTrigger("Hit");
             else
                 _powerUpAnimator.SetTrigger("SkipExplosionAnim");

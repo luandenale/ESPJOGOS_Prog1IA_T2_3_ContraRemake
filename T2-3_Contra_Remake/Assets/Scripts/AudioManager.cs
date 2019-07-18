@@ -23,7 +23,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioClip _regularShot;
     [SerializeField] AudioClip _spreadShot;
 
+    [SerializeField] AudioClip _levelClear;
+
     [SerializeField] AudioSource _sfxAudioSource;
+    [SerializeField] AudioSource _musicAudioSource;
 
     private void Awake()
     {
@@ -113,5 +116,20 @@ public class AudioManager : MonoBehaviour
     public void PlaySpreadShot()
     {
         _sfxAudioSource.PlayOneShot(_spreadShot);
+    }
+
+    public void StopMainMusic()
+    {
+        _musicAudioSource.Stop();
+    }
+
+    public void StageClear()
+    {
+        _musicAudioSource.PlayOneShot(_levelClear);
+    }
+
+    public bool IsSFXPlaying()
+    {
+        return _sfxAudioSource.isPlaying;
     }
 }

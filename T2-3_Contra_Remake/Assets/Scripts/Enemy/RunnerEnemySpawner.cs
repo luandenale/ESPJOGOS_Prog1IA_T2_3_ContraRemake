@@ -18,10 +18,13 @@ public class RunnerEnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerManager.instance.transform.position.x > playerXPosStart && !_startedSpawning)
+        if (PlayerManager.instance != null)
         {
-            _startedSpawning = true;
-            StartCoroutine(SpawnRoutine());
+            if (PlayerManager.instance.transform.position.x > playerXPosStart && !_startedSpawning)
+            {
+                _startedSpawning = true;
+                StartCoroutine(SpawnRoutine());
+            }
         }
     }
 

@@ -78,6 +78,7 @@
     <Compile Include="Assets\Scripts\Enemy\RunnerEnemySpawner.cs" />
     <Compile Include="Assets\Scripts\Enemy\ShooterEnemyController.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\MenuController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerAnimations.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInput.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerManager.cs" />

@@ -41,134 +41,135 @@ public class NormalCannonEnemyController : MonoBehaviour
 
     private void Update()
     {
-
-        if (_visible)
+        if (PlayerManager.instance != null)
         {
-            _active = true;
-        }
-        if (_active && !PlayerManager.instance.PlayerDied)
-        {
-            if (life > 0)
+            if (_visible)
             {
-                Vector3 __playerPosition = new Vector3(PlayerManager.instance.transform.position.x, PlayerManager.instance.transform.position.y + 0.75f);
-                Vector2 __difference = __playerPosition - transform.position;
-                float __angle = Mathf.Atan2(__difference.y, __difference.x);
-                float __angleInDegrees = __angle * Mathf.Rad2Deg;
+                _active = true;
+            }
+            if (_active && !PlayerManager.instance.PlayerDied)
+            {
+                if (life > 0)
+                {
+                    Vector3 __playerPosition = new Vector3(PlayerManager.instance.transform.position.x, PlayerManager.instance.transform.position.y + 0.75f);
+                    Vector2 __difference = __playerPosition - transform.position;
+                    float __angle = Mathf.Atan2(__difference.y, __difference.x);
+                    float __angleInDegrees = __angle * Mathf.Rad2Deg;
 
-                if (__angleInDegrees >= 75f && __angleInDegrees < 105f)
-                {
-                    if(_zAngle != 0f)
+                    if (__angleInDegrees >= 75f && __angleInDegrees < 105f)
                     {
-                        _normalCannonAnimator.SetTrigger("Up");
-                        _zAngle = 0f;
+                        if (_zAngle != 0f)
+                        {
+                            _normalCannonAnimator.SetTrigger("Up");
+                            _zAngle = 0f;
 
+                        }
                     }
-                }
-                else if (__angleInDegrees >= 105f && __angleInDegrees < 135f)
-                {
-                    if (_zAngle != 30f)
+                    else if (__angleInDegrees >= 105f && __angleInDegrees < 135f)
                     {
-                        _normalCannonAnimator.SetTrigger("UpLeft");
-                        _zAngle = 30f;
+                        if (_zAngle != 30f)
+                        {
+                            _normalCannonAnimator.SetTrigger("UpLeft");
+                            _zAngle = 30f;
+                        }
                     }
-                }
-                else if (__angleInDegrees >= 135f && __angleInDegrees < 165f)
-                {
-                    if (_zAngle != 60f)
+                    else if (__angleInDegrees >= 135f && __angleInDegrees < 165f)
                     {
-                        _normalCannonAnimator.SetTrigger("LeftUp");
-                        _zAngle = 60f;
+                        if (_zAngle != 60f)
+                        {
+                            _normalCannonAnimator.SetTrigger("LeftUp");
+                            _zAngle = 60f;
+                        }
                     }
-                }
-                else if ((__angleInDegrees >= 165f && __angleInDegrees <= 180f) || (__angleInDegrees >= -180f && __angleInDegrees < -165f))
-                {
-                    if (_zAngle != 90f)
+                    else if ((__angleInDegrees >= 165f && __angleInDegrees <= 180f) || (__angleInDegrees >= -180f && __angleInDegrees < -165f))
                     {
-                        _normalCannonAnimator.SetTrigger("Left");
-                        _zAngle = 90f;
+                        if (_zAngle != 90f)
+                        {
+                            _normalCannonAnimator.SetTrigger("Left");
+                            _zAngle = 90f;
+                        }
                     }
-                }
-                else if (__angleInDegrees >= -165f && __angleInDegrees < -135f)
-                {
-                    if (_zAngle != 120f)
+                    else if (__angleInDegrees >= -165f && __angleInDegrees < -135f)
                     {
-                        _normalCannonAnimator.SetTrigger("LeftDown");
-                        _zAngle = 120f;
+                        if (_zAngle != 120f)
+                        {
+                            _normalCannonAnimator.SetTrigger("LeftDown");
+                            _zAngle = 120f;
+                        }
                     }
-                }
-                else if (__angleInDegrees >= -135f && __angleInDegrees < -105f)
-                {
-                    if (_zAngle != 150f)
+                    else if (__angleInDegrees >= -135f && __angleInDegrees < -105f)
                     {
-                        _normalCannonAnimator.SetTrigger("DownLeft");
-                        _zAngle = 150f;
+                        if (_zAngle != 150f)
+                        {
+                            _normalCannonAnimator.SetTrigger("DownLeft");
+                            _zAngle = 150f;
+                        }
                     }
-                }
-                else if (__angleInDegrees >= -105f && __angleInDegrees < -75f)
-                {
-                    if (_zAngle != 180f)
+                    else if (__angleInDegrees >= -105f && __angleInDegrees < -75f)
                     {
-                        _normalCannonAnimator.SetTrigger("Down");
-                        _zAngle = 180f;
+                        if (_zAngle != 180f)
+                        {
+                            _normalCannonAnimator.SetTrigger("Down");
+                            _zAngle = 180f;
+                        }
                     }
-                }
-                else if (__angleInDegrees >= -75f && __angleInDegrees < -45f)
-                {
-                    if (_zAngle != -150f)
+                    else if (__angleInDegrees >= -75f && __angleInDegrees < -45f)
                     {
-                        _normalCannonAnimator.SetTrigger("DownRight");
-                        _zAngle = -150f;
+                        if (_zAngle != -150f)
+                        {
+                            _normalCannonAnimator.SetTrigger("DownRight");
+                            _zAngle = -150f;
+                        }
                     }
-                }
-                else if (__angleInDegrees >= -45f && __angleInDegrees < -15f)
-                {
-                    if (_zAngle != -120f)
+                    else if (__angleInDegrees >= -45f && __angleInDegrees < -15f)
                     {
-                        _normalCannonAnimator.SetTrigger("RightDown");
-                        _zAngle = -120f;
+                        if (_zAngle != -120f)
+                        {
+                            _normalCannonAnimator.SetTrigger("RightDown");
+                            _zAngle = -120f;
+                        }
                     }
-                }
-                else if (__angleInDegrees >= -15f && __angleInDegrees < 15f)
-                {
-                    if (_zAngle != -90f)
+                    else if (__angleInDegrees >= -15f && __angleInDegrees < 15f)
                     {
-                        _normalCannonAnimator.SetTrigger("Right");
-                        _zAngle = -90f;
+                        if (_zAngle != -90f)
+                        {
+                            _normalCannonAnimator.SetTrigger("Right");
+                            _zAngle = -90f;
+                        }
                     }
-                }
-                else if (__angleInDegrees >= 15f && __angleInDegrees < 45f)
-                {
-                    if (_zAngle != -60f)
+                    else if (__angleInDegrees >= 15f && __angleInDegrees < 45f)
                     {
-                        _normalCannonAnimator.SetTrigger("RightUp");
-                        _zAngle = -60f;
+                        if (_zAngle != -60f)
+                        {
+                            _normalCannonAnimator.SetTrigger("RightUp");
+                            _zAngle = -60f;
+                        }
                     }
-                }
-                else if (__angleInDegrees >= 45f && __angleInDegrees < 75f)
-                {
-                    if (_zAngle != -30f)
+                    else if (__angleInDegrees >= 45f && __angleInDegrees < 75f)
                     {
-                        _normalCannonAnimator.SetTrigger("UpRight");
-                        _zAngle = -30f;
+                        if (_zAngle != -30f)
+                        {
+                            _normalCannonAnimator.SetTrigger("UpRight");
+                            _zAngle = -30f;
+                        }
+                    }
+                    if (!_startedShooting)
+                    {
+                        _startedShooting = true;
+                        _normalCannonAnimator.SetTrigger("Unlock");
+                        StartCoroutine(StartShooting());
                     }
                 }
-                if (!_startedShooting)
+                else if (_active)
                 {
-                    _startedShooting = true;
-                    _normalCannonAnimator.SetTrigger("Unlock");
-                    StartCoroutine(StartShooting());
+                    _active = false;
+                    _normalCannonAnimator.SetBool("UnlockFinished", false);
+                    _normalCannonAnimator.SetTrigger("Explode");
+                    _normalCannonCollider.enabled = false;
+                    Destroy(gameObject, 1.1f);
                 }
             }
-            else if(_active)
-            {
-                _active = false;
-                _normalCannonAnimator.SetBool("UnlockFinished", false);
-                _normalCannonAnimator.SetTrigger("Explode");
-                _normalCannonCollider.enabled = false;
-                Destroy(gameObject, 1.1f);
-            }
         }
-        
     }
 
     private IEnumerator StartShooting()

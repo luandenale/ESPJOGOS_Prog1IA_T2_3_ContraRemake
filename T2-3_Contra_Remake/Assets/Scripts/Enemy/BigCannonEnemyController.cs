@@ -22,7 +22,7 @@ public class BigCannonEnemyController : MonoBehaviour
         _visible = false;
         _active = false;
         _startedShooting = false;
-        _zAngle = 0f;
+        _zAngle = 90f;
         _cannonAnimator = GetComponent<Animator>();
         _cannonCollider = GetComponent<BoxCollider2D>();
         shot.GetComponentsInChildren<SpriteRenderer>()[1].enabled = false;

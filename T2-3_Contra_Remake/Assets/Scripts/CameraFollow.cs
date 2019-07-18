@@ -16,11 +16,13 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if(PlayerManager.instance.PlayerDirection.x > 0f && PlayerManager.instance.transform.position.x > _initialPos && PlayerManager.instance.transform.position.x < _finalPos)
+        if (PlayerManager.instance != null)
         {
-            if (PlayerManager.instance.transform.position.x > transform.position.x)
-                transform.position = new Vector3(PlayerManager.instance.transform.position.x, transform.position.y, transform.position.z);
+            if (PlayerManager.instance.PlayerDirection.x > 0f && PlayerManager.instance.transform.position.x > _initialPos && PlayerManager.instance.transform.position.x < _finalPos)
+            {
+                if (PlayerManager.instance.transform.position.x > transform.position.x)
+                    transform.position = new Vector3(PlayerManager.instance.transform.position.x, transform.position.y, transform.position.z);
+            }
         }
-
     }
 }
