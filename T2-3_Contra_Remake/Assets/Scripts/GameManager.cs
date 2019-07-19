@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
                 }
             }else if (Input.GetKeyDown(KeyCode.R))
             {
+                Physics2D.IgnoreLayerCollision(0, 4, false);
                 _asyncScene.allowSceneActivation = true;
                 Destroy(PlayerManager.instance.gameObject);
             }
