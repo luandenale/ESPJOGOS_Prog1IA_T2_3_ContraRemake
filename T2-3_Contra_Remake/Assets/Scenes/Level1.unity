@@ -9684,7 +9684,7 @@ PrefabInstance:
     - target: {fileID: 3103510583866113831, guid: 5254099f5da33804dbe3919477791b93,
         type: 3}
       propertyPath: CurrentWeapon
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3103510583866113831, guid: 5254099f5da33804dbe3919477791b93,
         type: 3}
