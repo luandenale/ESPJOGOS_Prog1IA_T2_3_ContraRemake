@@ -23,8 +23,13 @@ public class ShotController : MonoBehaviour
 
     private void Update()
     {
-        if(shotType == "Fire")
+        if(shotType == "Fire" && !_rotatingShot.activate)
             _rotatingShot.activate = true;
+
+        if (_rotatingShot.activate && _rotatingShot.hit)
+        {
+            Destroy(gameObject);
+        }
 
         for(int i = 0; i < _shotsSprites.Length; i++)
         {

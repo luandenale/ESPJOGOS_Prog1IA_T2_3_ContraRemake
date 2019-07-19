@@ -140,8 +140,6 @@ AnimationClip:
     - time: 0.32
       value: {fileID: 21300008, guid: b60c34e10ef293e48b3ac1346101d050, type: 3}
     - time: 0.36
-      value: {fileID: 21300006, guid: b60c34e10ef293e48b3ac1346101d050, type: 3}
-    - time: 0.4
       value: {fileID: 0}
     attribute: m_Sprite
     path: Explosion4
@@ -257,7 +255,6 @@ AnimationClip:
     - {fileID: 21300008, guid: b60c34e10ef293e48b3ac1346101d050, type: 3}
     - {fileID: 21300010, guid: b60c34e10ef293e48b3ac1346101d050, type: 3}
     - {fileID: 21300008, guid: b60c34e10ef293e48b3ac1346101d050, type: 3}
-    - {fileID: 21300006, guid: b60c34e10ef293e48b3ac1346101d050, type: 3}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 21300006, guid: b60c34e10ef293e48b3ac1346101d050, type: 3}
@@ -284,7 +281,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.44
+    m_StopTime: 0.4
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

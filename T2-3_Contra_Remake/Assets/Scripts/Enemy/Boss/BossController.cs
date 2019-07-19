@@ -56,7 +56,7 @@ public class BossController : MonoBehaviour
 
     private IEnumerator InitiateBoss()
     {
-        while(Camera.main.transform.position.x < 67.25f)
+        while(Camera.main.transform.position.x < 67.31f)
         {
             Camera.main.transform.Translate(new Vector3(2,0,0) * Time.deltaTime);
             yield return null;

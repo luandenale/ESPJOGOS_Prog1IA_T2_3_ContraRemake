@@ -7,6 +7,7 @@ public class MenuController : MonoBehaviour
 {
     private AudioSource _audioSource;
     private Animator _animator;
+    private AsyncOperation _asyncScene;
 
     private bool _selected;
     private bool _canStart;
@@ -17,6 +18,9 @@ public class MenuController : MonoBehaviour
         _animator = GetComponent<Animator>();
         _selected = false;
         _canStart = false;
+
+        _asyncScene = SceneManager.LoadSceneAsync("Level1");
+        _asyncScene.allowSceneActivation = false;
     }
 
     private void Update()
@@ -28,7 +32,7 @@ public class MenuController : MonoBehaviour
         }
 
         if(_selected && _canStart)
-            SceneManager.LoadScene("Level1");
+            _asyncScene.allowSceneActivation = true;
     }
 
     public void PlayIntroMusic()

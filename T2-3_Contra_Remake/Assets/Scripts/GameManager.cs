@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class GameManager : MonoBehaviour
     private bool _triggeredRestart;
     private int _extraLives;
 
+    private AsyncOperation _asyncScene;
+
     private void Start()
     {
         _playerInstantiated = false;
@@ -20,6 +23,9 @@ public class GameManager : MonoBehaviour
         _extraLives = 2;
 
         StartCoroutine(SlideIntro());
+
+        _asyncScene = SceneManager.LoadSceneAsync("Level1");
+        _asyncScene.allowSceneActivation = false;
     }
 
     private void Update()
@@ -38,6 +44,10 @@ public class GameManager : MonoBehaviour
                     PlayerManager.instance.GODMODE = false;
                     _godModeText.SetActive(false);
                 }
+            }else if (Input.GetKeyDown(KeyCode.R))
+            {
+                _asyncScene.allowSceneActivation = true;
+                Destroy(PlayerManager.instance.gameObject);
             }
 
             if (PlayerManager.instance.PlayerDied && !_triggeredRestart )

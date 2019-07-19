@@ -54,7 +54,8 @@ public class RunnerEnemyController : MonoBehaviour
                 {
                     _destroyed = true;
                     _active = false;
-                    _rigidbody2D.AddForce(new Vector2(0f, 5.5f), ForceMode2D.Impulse);
+                    if(_rigidbody2D.velocity.y == 0)
+                        _rigidbody2D.AddForce(new Vector2(0f, 5.5f), ForceMode2D.Impulse);
                     _collider2D.enabled = false;
 
                     _animator.SetBool("Jump", true);

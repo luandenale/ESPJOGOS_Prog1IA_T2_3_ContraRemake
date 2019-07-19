@@ -7,6 +7,7 @@ public class RotatingShot : MonoBehaviour
     public bool activate;
 
     private bool _triggered;
+    public bool hit;
     private float _xDir;
     private BoxCollider2D _boxCollider;
 
@@ -15,6 +16,7 @@ public class RotatingShot : MonoBehaviour
     private void Awake()
     {
         activate = false;
+        hit = false;
         _triggered = false;
         _boxCollider = GetComponent<BoxCollider2D>();
     }
@@ -31,6 +33,11 @@ public class RotatingShot : MonoBehaviour
                 _xDir = PlayerManager.instance.PlayerDirection.x;
             }
 
+            if (hit)
+            {
+                _boxCollider.enabled = false;
+            }
+
             GetComponent<SpriteRenderer>().enabled = true;
 
             rotationCenter.Rotate(0f, 0f, -_xDir * 45f);
@@ -41,6 +48,7 @@ public class RotatingShot : MonoBehaviour
     {
         if (collision.tag == "PowerUp")
         {
+            hit = true;
             AudioManager.instance.PlayPowerUpExplode();
             collision.GetComponent<PowerUpController>().DropPowerUp(6f);
         }
@@ -48,12 +56,15 @@ public class RotatingShot : MonoBehaviour
         {
             if (collision.GetComponent<StaticPowerUp>().canExplode)
             {
+                hit = true;
                 AudioManager.instance.PlayPowerUpExplode();
                 collision.GetComponent<StaticPowerUp>().DropPowerUp();
             }
         }
         else if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
+            if (collision.GetComponent<BossShot>() == null && collision.tag != "RunnerFeet")
+                hit = true;
             if (collision.GetComponent<RunnerEnemyController>() != null)
             {
                 AudioManager.instance.PlayEnemyExplode();

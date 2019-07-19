@@ -47,6 +47,8 @@ public class PlayerManager : MonoBehaviour
 
     public bool GODMODE = false;
 
+    private bool _invulnerable = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -67,7 +69,7 @@ public class PlayerManager : MonoBehaviour
     {
         if(GODMODE)
             Physics2D.IgnoreLayerCollision(0, 8, true);
-        else
+        else if (!PlayerDied && !_invulnerable)
             Physics2D.IgnoreLayerCollision(0, 8, false);
 
         if (_playerRigidBody.velocity.y != 0)
@@ -128,9 +130,9 @@ public class PlayerManager : MonoBehaviour
             if (!GODMODE)
             {
                 PlayerDied = true;
-                _collider.enabled = false;
                 AudioManager.instance.PlayDie();
                 Physics2D.IgnoreLayerCollision(0, 8, true);
+                Physics2D.IgnoreLayerCollision(0, 4, true);
 
             }
         }
@@ -160,7 +162,7 @@ public class PlayerManager : MonoBehaviour
 
     public void ResetPlayer()
     {
-        _collider.enabled = true;
+        Physics2D.IgnoreLayerCollision(0, 4, false);
         _playerRigidBody.velocity = Vector2.zero;
         GetComponent<Animator>().SetTrigger("Jump");
 
@@ -183,11 +185,13 @@ public class PlayerManager : MonoBehaviour
 
     private IEnumerator FlickerInvulnerable()
     {
+        _invulnerable = true;
         Physics2D.IgnoreLayerCollision(0, 8, true);
         _flickerAnimator.SetTrigger("Trigger");
 
         yield return new WaitForSeconds(1.5f);
 
+        _invulnerable = false;
         Physics2D.IgnoreLayerCollision(0, 8, false);
     }
 

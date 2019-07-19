@@ -24,7 +24,7 @@ public class BossHiddenEnemy : MonoBehaviour
         active = false;
         _destroyed = false;
         _startedShooting = false;
-        _zAngle = 0f;
+        _zAngle = 100f;
         _animator = GetComponent<Animator>();
         _collider = GetComponent<BoxCollider2D>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
